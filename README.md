@@ -1,6 +1,6 @@
 # MidTerm Project
 
-# Project JOHN
+# Project Transcribe
 ---------------------------------
 ## We are deployed on _____
 
@@ -10,26 +10,20 @@
 ## Web Application
 ***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-The web application consists of a frontend written in Razor views, HTML, CSS,
-Bootstrap, Popper, and jQuery. The backend was written in C# using ASP.NET Core 2, Entity Framework Core, and the MVC framework.
+The application is a communication platform for realtime chat between two users. We will be utilizing NodeJS, JavaScript, Google Translate API, and AWS. 
 
-An interface is provided to create new blog
-posts, view existing blog posts, edit existing blog posts, delete existing
-blog posts, and search by both keywords and usernames. All blog posts can be
-enriched using Azure Language Services (part of Microsoft's Cognitive Services
-suite), Bing Image API, and Parallel Dots (for automated tagging of posts via
-key phrases detected within the post's body). Image enrichments can be added
-based on the overall sentiment score (a range 0.0 - 1.0 related to the mood
-of the post) and key phrases / keywords detected in the posts. Optionally, users
-can choose to opt-out of these features for privacy or data collection concerns.
+Users will be able to create a username and sign in. They can chat through command line to other users in the same chat server. Ultimately, we will be utilizing Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, two users can communicate easily and effectively in two different languages at the same time. 
+
+Expansion of this project will include persisting messages in a database so that users will be able to receive messages when they are not active on the server and review previously received messages. 
 
 ---------------------------------
 
 ## Tools Used
-Microsoft Visual Studio
 
 - NodeJS
 - Express 
+- Google Translate API
+- AWS
 
 
 ---------------------------------
