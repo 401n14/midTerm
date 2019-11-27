@@ -3,23 +3,30 @@
 const io = require('socket.io-client');
 const socket = io.connect('http://localhost:3000');
 
-const repl = require('repl');
+const readline = require('readline');
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
 let username;
 
 socket.on('connect', () => {
-    console.log(`Chat started`);
-    username = process.argv[2];
-    socket.emit('username', {username: username});
-})
+    console.log(`Chat started\n`);
+
+    rl.question('What is your name? ', (answer) => {
+        socket.emit('username', {username: answer});
+    });
+});
+
+rl.on('line', (message) => {
+    socket.emit('message', message);
+});
 
 socket.on('message', (data) => {
-    const { cmd, username } = data;
+    console.log(data)
+});
 
-    console.log(username + ': ' + cmd.split('\n')[0]);
-})
-
-repl.start({
-    eval: (cmd) => {
-        socket.send({cmd, username})
-    }
-})
+socket.on('username', (data) => {
+    console.log(`${data} joined the chat\n`)
+});
