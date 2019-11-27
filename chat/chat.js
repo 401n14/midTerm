@@ -15,7 +15,8 @@ socket.on('connect', () => {
     console.log(`Chat started\n`);
 
     rl.question('What is your name? ', (answer) => {
-        socket.emit('username', {username: answer});
+        username = answer;
+        socket.emit('username', {username: username});
     });
 });
 
@@ -24,9 +25,9 @@ rl.on('line', (message) => {
 });
 
 socket.on('message', (data) => {
-    console.log(data)
+    console.log(`${data.user}: ${data.message}`)
 });
 
-socket.on('username', (data) => {
+socket.on('new user', (data) => {
     console.log(`${data} joined the chat\n`)
 });
