@@ -1,6 +1,6 @@
 'use strict';
 
-const io = require('socket.io')(3000);
+const io = require('socket.io')(process.env.PORT || 3000);
 
 io.on('connection', (socket) => {
   socket.on('username', (data) => {
