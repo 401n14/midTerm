@@ -1,7 +1,7 @@
 'use strict';
 
 const io = require('socket.io-client');
-const socket = io.connect('http://localhost:3000');
+const socket = io.connect('https://n14-transcribe.herokuapp.com');
 
 const readline = require('readline');
 const rl = readline.createInterface({
