@@ -1,6 +1,10 @@
 'use strict';
 
-const io = require('socket.io')(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
+const server = express()
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = SocketIO(server);
 
 io.on('connection', (socket) => {
   socket.on('username', (data) => {
