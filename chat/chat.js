@@ -29,11 +29,10 @@ socket.on('connect', () => {
 });
 
 rl.on('line', message => {
-  socket.emit('message', message);
+  socket.emit('message', {user: socket.id, message: message});
 });
 
 socket.on('message', data => {
-  socket.on('translate', userLanguage);
   console.log(`${data.user}: ${data.message}`);
 });
 
