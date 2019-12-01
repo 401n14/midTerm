@@ -5,8 +5,8 @@ const { Translate } = require('@google-cloud/translate').v2;
 const translate = new Translate();
 
 // Create function to translate message before console.logging on 'message' and 'new user' events
-const testInput = 'Hola Mundo';
-console.log('Detected language input: ', testInput);
+// const testInput = 'Hola Mundo';
+// console.log('Detected language input: ', testInput);
 
 // Detects the language. "text" can be a string for detecting the language of
 // a single piece of text, or an array of strings for detecting the languages
@@ -18,10 +18,10 @@ async function detectLanguage(inputLanguage) {
   return detections[0].language;
 }
 
-let detect = detectLanguage(testInput);
+// let detect = detectLanguage(testInput);
 
-const text = 'Hello, World!';
-console.log('Test input language: ', text);
+// const text = 'Hello, World!';
+// console.log('Test input language: ', text);
 // const target = 'The target language, e.g. ru';
 
 async function translateText(text, targetLanguage) {
@@ -35,4 +35,6 @@ async function translateText(text, targetLanguage) {
   return translations[0];
 }
 
-translateText(text, detect);
+// translateText(text, detect);
+
+module.exports = { detectLanguage, translateText };

@@ -13,6 +13,7 @@ const rl = readline.createInterface({
 
 // Create username for each socket connection
 let username;
+let userLanguage = 'en';
 
 socket.on('connect', () => {
   console.log(`Chat started\n`);
@@ -20,6 +21,10 @@ socket.on('connect', () => {
   rl.question('What is your name? ', answer => {
     username = answer;
     socket.emit('username', { username: username });
+    rl.question('What language do you speak? ', language => {
+      userLanguage = language;
+      socket.emit('language', { language });
+    });
   });
 });
 
@@ -28,11 +33,10 @@ rl.on('line', message => {
 });
 
 socket.on('message', data => {
+  socket.on('translate', userLanguage);
   console.log(`${data.user}: ${data.message}`);
 });
 
 socket.on('new user', data => {
   console.log(`${data} joined the chat\n`);
 });
-
-
