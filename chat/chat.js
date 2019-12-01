@@ -1,8 +1,7 @@
 'use strict';
 
 const io = require('socket.io-client');
-const PORT = process.env.PORT;
-const socket = io.connect(`https://n14-transcribe.herokuapp.com:${PORT}`);
+const socket = io.connect('https://n14-transcribe.herokuapp.com');
 
 const readline = require('readline');
 const rl = readline.createInterface({
