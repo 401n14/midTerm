@@ -13,10 +13,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
-    "watch": "nodemon index.js",
+    "start": "node server/app.js",
     "lint": "eslint \"**/*.js\"",
-    "test-watch": "jest --watchAll",
     "test": "jest --verbose --coverage"
   },
   "repository": {
