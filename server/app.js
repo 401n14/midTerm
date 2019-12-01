@@ -6,12 +6,15 @@ const translate = require('../translate');
 let socketPool = {};
 
 io.on('connection', socket => {
+  // Listens for 'username' event 
   socket.on('username', data => {
     socket.username = data.username;
     console.log(`${socket.username} joined the chat!`);
-
-    // socket.broadcast.emit('new user', socket.username);
   });
+
+  // Listens for 'language' event
+  // Calls detect language to determine language user typed in
+  // Adds socket to socket pool with language preference 
   socket.on('language', async data => {
     let language = await translate.detectLanguage(data.language);
     console.log('LANGUAGA!: ', language);
@@ -24,6 +27,9 @@ io.on('connection', socket => {
     socket.broadcast.emit('new user', socket.username);
   });
 
+  // Listens for 'message' event
+  // Loops through connected sockets in the socket pool 
+  // Translates message according to their language preference and emits 'message' event to socket
   socket.on('message', async data => {
     let user = socket.username;
 
@@ -36,6 +42,7 @@ io.on('connection', socket => {
     }
   });
 
+  // Listens for a 'disconnect' event
   socket.on('disconnect', () => {
     console.log(`User left the chat`);
   });
