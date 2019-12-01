@@ -1,7 +1,22 @@
 'use strict';
 
-const io = require('socket.io')(3000);
-const translate = require('../translate');
+const express = require('express');
+const socketIO = require('socket.io');
+// const translate = require('../translate');
+
+const PORT = process.env.PORT || 3000;
+const server = express()
+  .listen(PORT, () => console.log(`Listening on ${PORT}`));
+
+const io = socketIO(server);
+const apiKey = process.env.GOOGLE_API_KEY;
+
+let options = {
+  concurrentLimit: 20,
+  requestOptions: {},
+};
+
+const googleTranslate = require('google-translate')(apiKey, options);
 
 let socketPool = {};
 
@@ -15,14 +30,12 @@ io.on('connection', socket => {
   // Listens for 'language' event
   // Calls detect language to determine language user typed in
   // Adds socket to socket pool with language preference 
-  socket.on('language', async data => {
-    let language = await translate.detectLanguage(data.language);
-    console.log('LANGUAGA!: ', language);
+  socket.on('language', data => {
+    // let language = await translate.detectLanguage(data.language);
 
-    socketPool[socket.id] = language;
-
-    // socket.language = data.language;
-    // socket.emit('assign-language', data.language);
+    googleTranslate.detectLanguage(data.language, function(err, detection){
+      socketPool[socket.id] = detection.language;
+    });
 
     socket.broadcast.emit('new user', socket.username);
   });
@@ -35,9 +48,11 @@ io.on('connection', socket => {
 
     for (let socket in socketPool) {
       if(socket !== data.user) {
-        let translation = await translate.translateText(data.message, socketPool[socket]);
-        console.log(`${socket}`, translation);
-        io.to(`${socket}`).emit('message', {user: user, message: translation});
+        // let translation = await translate.translateText(data.message, socketPool[socket]);
+
+        let translation =  googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
+          io.to(`${socket}`).emit('message', {user: user, message: translation.translatedText});
+        });
       }
     }
   });
