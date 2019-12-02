@@ -9,6 +9,14 @@ class Model {
 
   //method for creating a user
   //also needs to create connections and chats
+  create(record){
+    try {
+      this.schema.create(record);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
 
   //method for reading users from username
 
