@@ -18,7 +18,19 @@ class Model {
   }
   
 
-  //method for reading users from username
+  read(query){
+    //The returns from this function need to be awaited
+    //let userRecord = await user.read(query);
+    try {
+      //If the query passed in is of type ID then we do a find by ID else we search by username
+      //That way this read function can be used with ID's from chat and connection or with username from users
+      if(mongoose.Types.ObjectId.isValid(query)) return this.schema.findById(query);
+      else return this.schema.find({username: query});
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   //method for updating users 
   //(Do users need to be updated? Change password maybe?)
@@ -27,7 +39,6 @@ class Model {
   //(Does that delete all the chats associated with them?) <-- Stretch Goal probably
   //delete functionality once a connection is closed
 
-  //find() which finds the last 5-10 entries for chat so that we can populate a chat history
 }
 
 
