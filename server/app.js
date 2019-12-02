@@ -34,6 +34,8 @@ io.on('connection', socket => {
     // let language = await translate.detectLanguage(data.language);
 
     googleTranslate.detectLanguage(data.language, function(err, detection){
+
+      // if unable to detect a language >> default to english?? 
       socketPool[socket.id] = detection.language;
     });
 
@@ -49,8 +51,8 @@ io.on('connection', socket => {
     for (let socket in socketPool) {
       if(socket !== data.user) {
         // let translation = await translate.translateText(data.message, socketPool[socket]);
-
-        let translation =  googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
+        
+        googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
           io.to(`${socket}`).emit('message', {user: user, message: translation.translatedText});
         });
       }
