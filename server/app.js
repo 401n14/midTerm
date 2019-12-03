@@ -8,13 +8,19 @@
  * @requires NPM:express
  * @requires NPM:socket.io
  * 
+ * 
  */
 const express = require('express');
 const socketIO = require('socket.io');
 
+
 const dotenv = require('dotenv');
 dotenv.config();
-
+/**
+ * This is the PORT variable that the server will use. It is declared in the .env file or defaults to 3000
+ * @constant PORT
+ * @type {number} port number
+ */
 const PORT = process.env.PORT || 3000;
 const server = express()
   .listen(PORT, () => console.log(`Listening on ${PORT}`));

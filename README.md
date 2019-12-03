@@ -10,7 +10,7 @@
 ## Web Application
 ***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-The application is a communication platform for realtime chat between two users. We will be utilizing NodeJS, JavaScript, Google Translate API, and AWS. 
+The application is a communication platform for realtime chat between two or more users. We will be utilizing NodeJS, JavaScript, Google Translate API, and AWS. 
 
 Users will be able to create a username and sign in. They can chat through command line to other users in the same chat server. Ultimately, we will be utilizing Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, two users can communicate easily and effectively in two different languages at the same time. 
 
