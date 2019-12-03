@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const MongoMemoryServer = require('mongodb-memory-server').default;
 const User = require('../model/user/user-model');
 const userDB = new User();
+// const Chat = require('../model/chat/chat-model');
+
 let mongod;
 
 const spyError = jest.spyOn(console, 'error'); 
