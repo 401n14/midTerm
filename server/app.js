@@ -1,4 +1,14 @@
 'use strict';
+/**
+ * @fileoverview This is the app.js file and it starts the server and begins listening for the connection of sockets
+ * @author Anna Li
+ * @author Nadya Ilinskaya
+ * @author James Dunn
+ * 
+ * @requires NPM:express
+ * @requires NPM:socket.io
+ * 
+ */
 const express = require('express');
 const socketIO = require('socket.io');
 
