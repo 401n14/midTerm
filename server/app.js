@@ -23,7 +23,7 @@ const googleTranslate = require('google-translate')(apiKey, options);
 let socketPool = {};
 
 io.on('connection', socket => {
-  // Listens for 'username' event 
+  // Listens for 'username' event
   socket.on('username', data => {
     socket.username = data.username;
     console.log(`${socket.username} joined the chat!`);
