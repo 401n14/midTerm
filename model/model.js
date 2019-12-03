@@ -30,7 +30,9 @@ class Model {
       console.error(error);
     }
   }
-  
+
+
+  //method for reading users from username
   /**
    * Read takes in a query string, checks to see if string is a valid ID if it is then it searches by ID
    * else it searches by username
@@ -47,13 +49,12 @@ class Model {
       //That way this read function can be used with ID's from chat and connection or with username from users
       if(mongoose.Types.ObjectId.isValid(query)) return this.schema.findById(query);
       else return this.schema.find({username: query});
-      
+
     } catch (error) {
       console.error(error);
     }
   }
-
-  //method for updating users 
+  //method for updating users
   //(Do users need to be updated? Change password maybe?)
 
   /**
