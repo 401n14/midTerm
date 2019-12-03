@@ -5,10 +5,13 @@ module.exports = exports = {};
 
 const mongoose = require('mongoose');
 
-//This function connects to our MONGODB using environment variables
-//It is exported so that we can use it in a server start function
+/**
+ * The connect function connects to our MONGODB using environment variables
+ * 
+ */
 exports.connect = async () => {
   await mongoose.connect(process.env.MONGODB_URI, {
+    //Options for queries that are reccomended on the mongoose website
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
