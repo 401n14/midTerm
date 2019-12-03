@@ -2,22 +2,41 @@
 
 const mongoose = require('mongoose');
 
+/**
+ * Class Model is the basis for our data models. It has all of the CRUD functionality methods inside of it
+ */
+
 class Model {
+/**
+* The constructor of our model
+* @param  {schema}   schema    A generated mongoose model
+* @return {Model}              A newly created Model object
+*/
   constructor(schema){
     this.schema = schema;
   }
 
-  //method for creating a user
-  //also needs to create connections and chats
+  /**
+   * Create allows us to insert a record in to the database as long as that record matches the Model's schema
+   * @param {Object} record - The object representing data we would like to insert in to the collection 
+   * @returns {Promise<Object>} - The created record in the database
+   * @returns {Error} - If there was an error during creation of the record this will provide more detailed documentation
+   */
   create(record){
     try {
-      this.schema.create(record);
+      return this.schema.create(record);
     } catch (error) {
       console.error(error);
     }
   }
   
-
+  /**
+   * Read takes in a query string, checks to see if string is a valid ID if it is then it searches by ID
+   * else it searches by username
+   * @param {String} query 
+   * @returns {Promise<Object>} - The record in the collection that matches the query paramaters
+   * @returns {Error} - If there is no match found read will throw an error indicating that
+   */
   read(query){
     //The returns from this function need to be awaited
     //let userRecord = await user.read(query);
@@ -35,10 +54,12 @@ class Model {
   //method for updating users 
   //(Do users need to be updated? Change password maybe?)
 
-  //method for deleting users
-  //(Does that delete all the chats associated with them?) <-- Stretch Goal probably
-  //delete functionality once a connection is closed
-
+  /**
+ * Delete allows us to delete a record from the collection base on an ID
+ * @param {String} _id  - The ID of the record to be deleted
+ * @returns {Object} - The deleted records information
+ * @returns {Error} - If there is an error during the delete process this will notify the user
+ */
   delete(_id){
     try {
       return this.schema.deleteOne({_id});
