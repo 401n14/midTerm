@@ -39,6 +39,14 @@ class Model {
   //(Does that delete all the chats associated with them?) <-- Stretch Goal probably
   //delete functionality once a connection is closed
 
+  delete(_id){
+    try {
+      return this.schema.deleteOne({_id});
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 }
 
 
