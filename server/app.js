@@ -2,13 +2,15 @@
 const express = require('express');
 const socketIO = require('socket.io');
 
-// const translate = require('../translate');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const server = express()
   .listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = socketIO(server);
+
 const apiKey = process.env.GOOGLE_API_KEY;
 
 let options = {
@@ -31,12 +33,16 @@ io.on('connection', socket => {
   // Calls detect language to determine language user typed in
   // Adds socket to socket pool with language preference 
   socket.on('language', data => {
-    // let language = await translate.detectLanguage(data.language);
+    let language;
 
     googleTranslate.detectLanguage(data.language, function(err, detection){
-
-      // if unable to detect a language >> default to english?? 
-      socketPool[socket.id] = detection.language;
+      // if unable to detect a language >> default to english
+      if(!detection) {
+        language = 'en';
+      } else {
+        language = detection.language;
+      }
+      socketPool[socket.id] = language;
     });
 
     socket.broadcast.emit('new user', socket.username);
@@ -50,8 +56,6 @@ io.on('connection', socket => {
 
     for (let socket in socketPool) {
       if(socket !== data.user) {
-        // let translation = await translate.translateText(data.message, socketPool[socket]);
-        
         googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
           io.to(`${socket}`).emit('message', {user: user, message: translation.translatedText});
         });
@@ -64,4 +68,3 @@ io.on('connection', socket => {
     console.log(`User left the chat`);
   });
 });
-

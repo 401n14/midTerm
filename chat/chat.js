@@ -2,8 +2,8 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com');
-// const socket = io.connect('http://localhost:3000');
+// const socket = io.connect('https://n14-transcribe.herokuapp.com');
+const socket = io.connect('http://localhost:3000');
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -27,7 +27,7 @@ socket.on('connect', () => {
   rl.question(chalk.hex('#FF9F1C')('What is your name? '), answer => {
     username = answer;
     // Emits a 'username' event with user input
-    socket.emit('username', { username: username });
+    socket.emit('username', { username });
 
     // Use readline to prompt for language
     rl.question(chalk.hex('#FF9F1C')('What language do you speak? '), language => {
@@ -40,7 +40,7 @@ socket.on('connect', () => {
 // When a user sends a message
 // A 'message' event is emitted containing the socket id along with the message entered
 rl.on('line', message => {
-  socket.emit('message', {user: socket.id, message: message});
+  socket.emit('message', {user: socket.id, message});
 });
 
 // Listens for a 'message' event and console logs data
@@ -50,5 +50,5 @@ socket.on('message', data => {
 
 // Listens for a 'new user' event and console logs data
 socket.on('new user', data => {
-  console.log(chalk.hex('#011627').bold(`>>>> ${data} joined the chat <<<<\n`));
+  console.log(chalk.hex('#011627').bold(`\n>>>> ${data} joined the chat <<<<\n`));
 });
