@@ -5,7 +5,7 @@ const MongoMemoryServer = require('mongodb-memory-server').default;
 const User = require('../model/user/user-model');
 const userDB = new User();
 const Chat = require('../model/chat/chat-model');
-const chat = new Chat;
+const chat = new Chat();
 const Connection = require('../model/connection/connection-model');
 const connection = new Connection();
 let mongod;
