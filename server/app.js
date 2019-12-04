@@ -95,17 +95,7 @@ io.on('connection', socket => {
    * @param {object} socket function will use socket.username
    * @fires exit
    */
-  socket.on('disconnect', () => {
-    /**
-     * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
-     * @param {string} exit exit event
-     * @param {string} socket.username username of the socket that has left the chat
-     * @event exit
-     */
-    delete userGroup[socket.id];
-    socket.broadcast.emit('exit', socket.username);
-    console.log(`${socket.username} left the chat`);
-  });
+  socket.on('disconnect', handleDisconnect(socket));
 });
 
 // Declare function to set socket username
@@ -186,4 +176,17 @@ const handleMessage = async (socket, data) => {
       });
     }
   }
+};
+
+// This function runs every time a user disconnects from the chat
+const handleDisconnect = socket => {
+  /**
+   * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
+   * @param {string} exit exit event
+   * @param {string} socket.username username of the socket that has left the chat
+   * @event exit
+   */
+  delete userGroup[socket.id];
+  socket.broadcast.emit('exit', socket.username);
+  console.log(`${socket.username} left the chat`);
 };
