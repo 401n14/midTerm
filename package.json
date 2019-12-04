@@ -9,6 +9,7 @@
     "express": "^4.17.1",
     "google-translate": "^3.0.0",
     "inquirer": "^7.0.0",
+    "jsdoc": "^3.6.3",
     "mongoose": "^5.7.13",
     "readline": "^1.3.0",
     "socket.io": "^2.3.0",
@@ -21,7 +22,8 @@
   "scripts": {
     "start": "node server/app.js",
     "lint": "eslint \"**/*.js\" --fix",
-    "test": "jest --verbose --coverage"
+    "test": "jest --verbose --coverage",
+    "jsdoc": "jsdoc -c ./docs/config/jsdoc.config.json"
   },
   "repository": {
     "type": "git",
