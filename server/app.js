@@ -6,9 +6,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
-const server = express().listen(PORT, () =>
-  console.log(`Listening on ${PORT}`)
-);
+const server = express().listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = socketIO(server);
 
@@ -65,7 +63,7 @@ io.on('connection', socket => {
       if (socket !== data.user) {
         googleTranslate.translate(data.message, socketPool[socket], function(
           err,
-          translation
+          translation,
         ) {
           io.to(`${socket}`).emit('message', {
             user: user,
