@@ -25,7 +25,11 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-
+/**
+ * This is the apiKey variable that the server requires to translate messages with Google Translate
+ * @constant apiKey
+ * @type {string}
+ */
 const apiKey = process.env.GOOGLE_API_KEY;
 
 let options = {
@@ -53,6 +57,7 @@ io.on('connection', socket => {
   /**
    * event listener for 'username' event
    * This will set socket.username data.username
+   * Console logs to the server '${socket.username} joined the chat!'
    * @param {string} username
    * @param {object} data This is looking for data.username
    * 
@@ -93,7 +98,7 @@ io.on('connection', socket => {
       socketPool[socket.id] = language;
     });
     /**
-     * 'new user' event that will broadcast to all connected sockets. 
+     * 'new user' event that will broadcast socket.username to all connected sockets. 
      * @param {string} new_user 
      * @param {string} socket.username looks for the username in the socket object  
      * @event newuser
@@ -129,7 +134,7 @@ io.on('connection', socket => {
          */
         googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
           /**
-           * sends the translated message
+           * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
            * @event message 
            * @param {string} message message event
            * @param {object} translationData {user: object, color: string, message, string}
@@ -152,7 +157,7 @@ io.on('connection', socket => {
    */
   socket.on('disconnect', () => {
     /**
-     * event that occurs when a user leaves the chat
+     * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
      * @param {string} exit exit event 
      * @param {string} socket.username username of the socket that has left the chat
      * @event exit 
