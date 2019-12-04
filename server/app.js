@@ -7,6 +7,7 @@
  * 
  * @requires NPM:express
  * @requires NPM:socket.io
+ * @requires NPM:dotenv
  * 
  * 
  */
@@ -93,7 +94,7 @@ io.on('connection', socket => {
       socketPool[socket.id] = language;
     });
     /**
-     * emits a 'new user' event 
+     * 'new user' event that will broadcast to all connected sockets. 
      * @param {string} new_user 
      * @param {string} socket.username looks for the username in the socket object  
      * @event newuser
@@ -105,12 +106,38 @@ io.on('connection', socket => {
   // Listens for 'message' event
   // Loops through connected sockets in the socket pool 
   // Translates message according to their language preference and emits 'message' event to socket
+  /**
+   * Listens for 'message' event. This will loop through all connected sockets in the socket pool. This will translate the message according to the user's specified language preferences. 
+   * @param {string} message message event
+   * @param {object} data The user inputed data. Function will use data.message & data.color
+   * @fires message
+   */
+  
   socket.on('message', async data => {
     let user = socket.username;
 
+    
     for (let socket in socketPool) {
       if(socket !== data.user) {
+        /**
+         * GoogleTranslate will translate the user input message
+         * @method translate
+         * @param {string} data.message the user inputted message
+         * @param {string} socketPool[socket] 
+         * @param {error} err 
+         * @param {object} translation will use translation.translatedText 
+         * 
+         */
         googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
+          /**
+           * sends the translated message
+           * @event message 
+           * @param {string} message message event
+           * @param {object} translationData {user: object, color: string, message, string}
+           * @param {object} user user object
+           * @param {string} data.color color from the data object
+           * @param {string} translation.translatedText translated version of the text
+           */
           io.to(`${socket}`).emit('message', {user: user, color: data.color, message: translation.translatedText});
         });
       }
@@ -118,7 +145,19 @@ io.on('connection', socket => {
   });
 
   // Listens for a 'disconnect' event
+  /**
+   * Listens for a 'disconnect' event when a user leaves the chat
+   * @param {string} disconnect disconnect event
+   * @param {object} socket function will use socket.username
+   * @fires exit
+   */
   socket.on('disconnect', () => {
+    /**
+     * event that occurs when a user leaves the chat
+     * @param {string} exit exit event 
+     * @param {string} socket.username username of the socket that has left the chat
+     * @event exit 
+     */
     socket.broadcast.emit('exit', socket.username);
     console.log(`${socket.username} left the chat`);
   });
