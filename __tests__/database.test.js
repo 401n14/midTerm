@@ -32,10 +32,14 @@ let users = {
   user1: {
     username: 'jhon',
     password: 'jhonpasswordhh',
+    language: 'english',
+    displayName: 'BigJhon123',
   },
   user2: {
     username: 'samuel',
     password: 'sampassword',
+    language: 'english',
+    displayName: 'sam123',
   },
 };
 beforeAll( async (done) => {
@@ -52,7 +56,6 @@ describe('Database CRUD functionality tests', () => {
   let userInfo;
   it('Can read a created user', async () => {
     userInfo = await userDB.read('jhon');
-    console.log(userInfo);
     expect(userInfo[0].username).toBe('jhon');
   });
 
