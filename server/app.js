@@ -63,7 +63,7 @@ io.on('connection', socket => {
       if (socket !== data.user) {
         googleTranslate.translate(data.message, socketPool[socket], function(
           err,
-          translation
+          translation,
         ) {
           io.to(`${socket}`).emit('message', {
             user: user,

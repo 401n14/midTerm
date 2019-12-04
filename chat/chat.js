@@ -54,7 +54,7 @@ socket.on('message', data => {
 // Listens for a 'new user' event and console logs data
 socket.on('new user', data => {
   console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`)
+    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
   );
 });
 
