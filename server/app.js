@@ -120,14 +120,14 @@ io.on('connection', socket => {
    * @param {object} data The user inputed data. Function will use data.message & data.color
    * @fires message
    */ 
-        socket.on('message', async data => {
-          // Send user and their spoken language with each message they send
-          let user = socket.username;
-          let language = socket.language;
+  socket.on('message', async data => {
+    // Send user and their spoken language with each message they send
+    let user = socket.username;
+    let language = socket.language;
           
-          for (let socket in socketPool) {
-            if (socket !== data.user) {
-              /**
+    for (let socket in socketPool) {
+      if (socket !== data.user) {
+        /**
                * GoogleTranslate will translate the user input message
                * @method translate
                * @param {string} data.message the user inputted message
@@ -136,11 +136,11 @@ io.on('connection', socket => {
                * @param {object} translation will use translation.translatedText 
                * 
                */
-                googleTranslate.translate(data.message, socketPool[socket], function(
-                  err,
-                  translation
-                  ) {
-                    /**
+        googleTranslate.translate(data.message, socketPool[socket], function(
+          err,
+          translation,
+        ) {
+          /**
                      * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
                      * @event message 
                      * @param {string} message message event
@@ -174,6 +174,7 @@ io.on('connection', socket => {
      * @param {string} socket.username username of the socket that has left the chat
      * @event exit 
      */
+    delete userGroup[socket.id];
     socket.broadcast.emit('exit', socket.username);
     console.log(`${socket.username} left the chat`);
   });
