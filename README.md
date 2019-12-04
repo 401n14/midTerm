@@ -4,8 +4,8 @@
 ---------------------------------
 ## We are deployed on _____
 
-[project url here]
-
+[Project link](https://n14-transcribe.herokuapp.com)
+[Travis CI](https://www.travis-ci.com/401n14/midTerm)
 ---------------------------------
 ## Web Application
 ***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
@@ -22,8 +22,9 @@ Expansion of this project will include persisting messages in a database so that
 
 - NodeJS
 - Express 
+- Socket.io
 - Google Translate API
-- AWS
+
 
 
 ---------------------------------
@@ -32,7 +33,7 @@ Expansion of this project will include persisting messages in a database so that
 
 Clone this repository to your local machine.
 ```
-$ git clone https://github.com/YourRepo/YourProject.git
+$ git clone https://github.com/401n14/midTerm.git
 ```
 Once downloaded, you can either use the dotnet CLI utilities or Visual Studio 2017 (or greater) to build the web application.
 ```
