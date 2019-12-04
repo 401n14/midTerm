@@ -111,7 +111,7 @@ io.on('connection', socket => {
     for (let socket in socketPool) {
       if(socket !== data.user) {
         googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
-          io.to(`${socket}`).emit('message', {user: user, message: translation.translatedText});
+          io.to(`${socket}`).emit('message', {user: user, color: data.color, message: translation.translatedText});
         });
       }
     }
@@ -119,6 +119,7 @@ io.on('connection', socket => {
 
   // Listens for a 'disconnect' event
   socket.on('disconnect', () => {
-    console.log(`User left the chat`);
+    socket.broadcast.emit('exit', socket.username);
+    console.log(`${socket.username} left the chat`);
   });
 });
