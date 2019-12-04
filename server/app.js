@@ -69,6 +69,7 @@ io.on('connection', socket => {
         ) {
           io.to(`${socket}`).emit('message', {
             user: user,
+            color: data.color,
             message: translation.translatedText,
             language,
           });
@@ -79,6 +80,7 @@ io.on('connection', socket => {
 
   // Listens for a 'disconnect' event
   socket.on('disconnect', () => {
-    console.log(`User left the chat`);
+    socket.broadcast.emit('exit', socket.username);
+    console.log(`${socket.username} left the chat`);
   });
 });
