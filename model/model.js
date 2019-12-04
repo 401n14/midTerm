@@ -1,6 +1,6 @@
 'use strict';
-
 const mongoose = require('mongoose');
+
 
 /**
  * Class Model is the basis for our data models. It has all of the CRUD functionality methods inside of it

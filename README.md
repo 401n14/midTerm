@@ -4,7 +4,7 @@
 ---------------------------------
 ## We are deployed on _____
 
-[project url here]
+[Project link](https://n14-transcribe.herokuapp.com)
 [Travis CI](https://www.travis-ci.com/401n14/midTerm)
 ---------------------------------
 ## Web Application
