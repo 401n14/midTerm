@@ -52,6 +52,7 @@ describe('Database CRUD functionality tests', () => {
   let userInfo;
   it('Can read a created user', async () => {
     userInfo = await userDB.read('jhon');
+    console.log(userInfo);
     expect(userInfo[0].username).toBe('jhon');
   });
 
