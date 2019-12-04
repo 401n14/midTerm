@@ -1,4 +1,32 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server/app.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server/app.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 /**
  * @fileoverview This is the app.js file and it starts the server and begins listening for the connection of sockets
  * @author Anna Li
@@ -8,6 +36,7 @@
  * @requires NPM:express
  * @requires NPM:socket.io
  * @requires NPM:dotenv
+ * 
  * 
  */
 const express = require('express');
@@ -25,11 +54,7 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-/**
- * This is the apiKey variable that the server requires to translate messages with Google Translate
- * @constant apiKey
- * @type {string}
- */
+
 const apiKey = process.env.GOOGLE_API_KEY;
 
 let options = {
@@ -46,7 +71,6 @@ const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 const io = socketIO(server);
 let socketPool = {};
-let userGroup = {};
 
 /**
  * this is an event listener for 'connection' event. This is emitted when a new socket connects to the chat server
@@ -58,14 +82,13 @@ io.on('connection', socket => {
   /**
    * event listener for 'username' event
    * This will set socket.username data.username
-   * Console logs to the server '${socket.username} joined the chat!'
    * @param {string} username
    * @param {object} data This is looking for data.username
    * 
    */
   socket.on('username', data => {
-    socket.username = ` ${data.username}`;
-    userGroup[socket.id] = ` ${socket.username}`;
+    socket.username = data.username;
+    console.log(`${socket.username} joined the chat!`);
   });
 
   // Listens for 'language' event
@@ -89,72 +112,61 @@ io.on('connection', socket => {
      * @param {object} detection looking for detection.language. 
      */
 
-    googleTranslate.detectLanguage(data.language, function(err, detection) {
+    googleTranslate.detectLanguage(data.language, function(err, detection){
       // if unable to detect a language >> default to english
-      if (!detection) {
+      if(!detection) {
         language = 'en';
       } else {
         language = detection.language;
       }
       socketPool[socket.id] = language;
-      socket.language = socketPool[socket.id];
     });
     /**
-     * 'new user' event that will broadcast socket.username to all connected sockets. 
+     * 'new user' event that will broadcast to all connected sockets. 
      * @param {string} new_user 
      * @param {string} socket.username looks for the username in the socket object  
      * @event newuser
      */
 
     socket.broadcast.emit('new user', socket.username);
-    // Anytime a new user signs in, console.log all users currently in chat
-    socket.emit('list-chat-users', Object.values(userGroup));
   });
 
   // Listens for 'message' event
-  // Loops through connected sockets in the socket pool
+  // Loops through connected sockets in the socket pool 
   // Translates message according to their language preference and emits 'message' event to socket
   /**
    * Listens for 'message' event. This will loop through all connected sockets in the socket pool. This will translate the message according to the user's specified language preferences. 
    * @param {string} message message event
-   * @param {object} data The user inputed data. Function will use data.message & data.color
+   * @param {object} data The user inputed data. Function will use data.message &amp; data.color
    * @fires message
-   */ 
-        socket.on('message', async data => {
-          // Send user and their spoken language with each message they send
-          let user = socket.username;
-          let language = socket.language;
-          
-          for (let socket in socketPool) {
-            if (socket !== data.user) {
-              /**
-               * GoogleTranslate will translate the user input message
-               * @method translate
-               * @param {string} data.message the user inputted message
-               * @param {string} socketPool[socket] 
-               * @param {error} err 
-               * @param {object} translation will use translation.translatedText 
-               * 
-               */
-                googleTranslate.translate(data.message, socketPool[socket], function(
-                  err,
-                  translation
-                  ) {
-                    /**
-                     * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
-                     * @event message 
-                     * @param {string} message message event
-                     * @param {object} translationData {user: object, color: string, message, string}
-                     * @param {object} user user object
-                     * @param {string} data.color color from the data object
-                     * @param {string} translation.translatedText translated version of the text
-                     */
-          io.to(`${socket}`).emit('message', {
-            user: user,
-            color: data.color,
-            message: translation.translatedText,
-            language,
-          });
+   */
+  
+  socket.on('message', async data => {
+    let user = socket.username;
+
+    
+    for (let socket in socketPool) {
+      if(socket !== data.user) {
+        /**
+         * GoogleTranslate will translate the user input message
+         * @method translate
+         * @param {string} data.message the user inputted message
+         * @param {string} socketPool[socket] 
+         * @param {error} err 
+         * @param {object} translation will use translation.translatedText 
+         * 
+         */
+        googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
+          /**
+           * sends the translated message
+           * @event message 
+           * @param {string} message message event
+           * @param {object} translationData {user: object, color: string, message, string}
+           * @param {object} user user object
+           * @param {string} data.color color from the data object
+           * @param {string} translation.translatedText translated version of the text
+           */
+          io.to(`${socket}`).emit('message', {user: user, color: data.color, message: translation.translatedText});
         });
       }
     }
@@ -169,7 +181,7 @@ io.on('connection', socket => {
    */
   socket.on('disconnect', () => {
     /**
-     * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
+     * event that occurs when a user leaves the chat
      * @param {string} exit exit event 
      * @param {string} socket.username username of the socket that has left the chat
      * @event exit 
@@ -178,3 +190,26 @@ io.on('connection', socket => {
     console.log(`${socket.username} left the chat`);
   });
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:exit">exit</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li></ul><h3>Global</h3><ul><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#translate">translate</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Dec 03 2019 19:24:04 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
