@@ -86,45 +86,7 @@ io.on('connection', socket => {
    * @fires message
    */
 
-  socket.on('message', async data => {
-    // Send user and their spoken language with each message they send
-    let user = socket.username;
-    let language = socket.language;
-
-    for (let socket in socketPool) {
-      if (socket !== data.user) {
-        /**
-         * GoogleTranslate will translate the user input message
-         * @method translate
-         * @param {string} data.message the user inputted message
-         * @param {string} socketPool[socket]
-         * @param {error} err
-         * @param {object} translation will use translation.translatedText
-         *
-         */
-        googleTranslate.translate(data.message, socketPool[socket], function(
-          err,
-          translation,
-        ) {
-          /**
-           * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
-           * @event message
-           * @param {string} message message event
-           * @param {object} translationData {user: object, color: string, message, string}
-           * @param {object} user user object
-           * @param {string} data.color color from the data object
-           * @param {string} translation.translatedText translated version of the text
-           */
-          io.to(`${socket}`).emit('message', {
-            user: user,
-            color: data.color,
-            message: translation.translatedText,
-            language,
-          });
-        });
-      }
-    }
-  });
+  socket.on('message', handleMessage(socket));
 
   // Listens for a 'disconnect' event
   /**
@@ -183,4 +145,45 @@ const setLanguage = (socket, data) => {
   socket.broadcast.emit('new user', socket.username);
   // Anytime a new user signs in, console.log all users currently in chat
   socket.emit('list-chat-users', Object.values(userGroup));
+};
+
+// This function handles messages going to and from each socket
+const handleMessage = async (socket, data) => {
+  // Send user and their spoken language with each message they send
+  let user = socket.username;
+  let language = socket.language;
+
+  for (let socket in socketPool) {
+    if (socket !== data.user) {
+      /**
+       * GoogleTranslate will translate the user input message
+       * @method translate
+       * @param {string} data.message the user inputted message
+       * @param {string} socketPool[socket]
+       * @param {error} err
+       * @param {object} translation will use translation.translatedText
+       *
+       */
+      googleTranslate.translate(data.message, socketPool[socket], function(
+        err,
+        translation,
+      ) {
+        /**
+         * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
+         * @event message
+         * @param {string} message message event
+         * @param {object} translationData {user: object, color: string, message, string}
+         * @param {object} user user object
+         * @param {string} data.color color from the data object
+         * @param {string} translation.translatedText translated version of the text
+         */
+        io.to(`${socket}`).emit('message', {
+          user: user,
+          color: data.color,
+          message: translation.translatedText,
+          language,
+        });
+      });
+    }
+  }
 };
