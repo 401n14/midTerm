@@ -7,7 +7,7 @@ const userDB = new User();
 const Chat = require('../model/chat/chat-model');
 const chat = new Chat;
 const Connection = require('../model/connection/connection-model');
-const connection = new Connection;
+const connection = new Connection();
 let mongod;
 
 const spyError = jest.spyOn(console, 'error'); 
