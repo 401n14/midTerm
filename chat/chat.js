@@ -38,7 +38,7 @@ socket.on('connect', () => {
     rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
       // Emits a 'language' event with user input
       socket.emit('language', { language });
-      console.log(chalk.hex('#2EC4B6')(`\n==== START CHATTING ====\n`));
+      console.log(chalk.hex('#2EC4B6')(`\n==== CHAT STARTED ====\n`));
     });
   });
 });
@@ -60,15 +60,13 @@ socket.on('new user', data => {
   console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
 });
 
-socket.on('chathistory', data => {
-  console.log(chalk.hex('#FF9F1C').bold(`Chat History`));
-  data.forEach(message => {
-    console.log(`${message.timestamp} ${message.message} `);
-  });
+socket.on('chathistory', message => {
+  // console.log(chalk.hex('#FF9F1C').bold(`Chat History`));
+  console.log(`${message.timestamp} ${message.message}`);
 });
 
 socket.on('list-chat-users', users => {
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  console.log(chalk.hex('#FF9F1C')('Current Users:' + users));
 });
 
 function getRandomColor() {

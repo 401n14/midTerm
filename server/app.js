@@ -95,16 +95,27 @@ io.on('connection', socket => {
      * @param {object} detection looking for detection.language. 
      */
 
-    let detectedLanguage = await googleTranslate.detectLanguage(data.language, function(err, detection) {
+    await googleTranslate.detectLanguage(data.language, async function(err, detection) {
       // if unable to detect a language >> default to english
       if (!detection) {
         language = 'en';
       } else {
         language = detection.language;
       }
+
+      let chatHistory = await chat.find();
+      
+      chatHistory.forEach(chat => {
+        googleTranslate.translate(chat.message, language, function(err, translation) {
+          socket.emit('chathistory', {timestamp: chat.timestamp, message: translation.translatedText});
+        });
+      });
+   
+
       socketPool[socket.id] = language;
       socket.language = socketPool[socket.id];
     });
+
     /**
      * 'new user' event that will broadcast socket.username to all connected sockets. 
      * @param {string} new_user 
@@ -114,9 +125,8 @@ io.on('connection', socket => {
 
     socket.broadcast.emit('new user', socket.username);
     // Anytime a new user signs in, console.log all users currently in chat
-    let chatHistory = await chat.find();
+    // let chatHistory = await chat.find();
     io.emit('list-chat-users', Object.values(userGroup));
-    socket.emit('chathistory', chatHistory);
   });
 
   /**
