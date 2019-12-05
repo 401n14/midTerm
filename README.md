@@ -49,7 +49,7 @@ Start chatting
 ## Usage
 
 ### Enter a username
-![username](./images/NameLogin.png
+![username](./images/NameLogin.png)
 
 ### Type in your preferred language
 ![Language](./images/LanguageChoice.png)
