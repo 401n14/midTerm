@@ -52,10 +52,18 @@ class Model {
       console.error(error);
     }
   }
+  /**
+   * Updates a specific recoord with new content
+   * @param {mongoose.Types.ObjectId}   _id   The id of user record we want to change
+   * @param {object}                  record  The new data we want our record to be updated to
+   * @return {Promise<object>}                The updated record and its contents
+   */
 
-  //method for updating users 
-  //(Do users need to be updated? Change password maybe?)
+  update(_id, record) {
+    return this.schema.updateOne({ _id }, record);
+  }
 
+  
   /**
  * Delete allows us to delete a record from the collection base on an ID
  * @method
