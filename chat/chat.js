@@ -17,6 +17,14 @@ const rl = readline.createInterface({
 // To store users with their generated color
 let users = {};
 
+/////////////////// USE THIS SECTION FOR NAMED FUNCTION REFACTORING //////////////////////////////
+
+const socketExit = data => {
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat <<<<\n`));
+};
+
+////////////////// CLOSE OF FUNCTION REFACTORING ////////////////////////////////////////////////
+
 // Listens for a 'connect' event
 // Prompt for name and language
 socket.on('connect', () => {
@@ -66,6 +74,7 @@ function getRandomColor() {
   return '#' + parseInt(Math.random() * 0xffffff).toString(16);
 }
 
-socket.on('exit', data => {
-  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat <<<<\n`));
-});
+socket.on('exit', socketExit);
+
+
+
