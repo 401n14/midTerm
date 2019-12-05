@@ -146,8 +146,9 @@ socket.on('list-chat-users', users => {
 });
 
 /**
- * @function getRandomColor
  * This function will use built in JS methods to create a random hex color
+ * @function getRandomColor
+ * @returns {string} random color string
  */
 function getRandomColor() {
   return '#' + parseInt(Math.random() * 0xffffff).toString(16);
