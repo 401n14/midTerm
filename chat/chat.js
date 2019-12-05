@@ -2,7 +2,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com');
+const socket = io.connect('https://transcribe-jamm.herokuapp.com');
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
