@@ -25,6 +25,14 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 
+//Database instantiated and connected 
+const dbServer = require('../model/db-server');
+dbServer.connect();
+
+//Instatiating the chat history mongoose model
+const Chat = require('../model/chat/chat-model');
+let chat = new Chat();
+
 /**
  * This is the apiKey variable that the server requires to translate messages with Google Translate
  * @constant apiKey
@@ -36,8 +44,8 @@ let options = {
   concurrentLimit: 20,
   requestOptions: {},
 };
-
 const googleTranslate = require('google-translate')(apiKey, options);
+
 
 app.use('/docs', express.static('./docs'));
 
@@ -68,9 +76,7 @@ io.on('connection', socket => {
     userGroup[socket.id] = ` ${socket.username}`;
   });
 
-  // Listens for 'language' event
-  // Calls detect language to determine language user typed in
-  // Adds socket to socket pool with language preference 
+ 
   /**
    * Listens for 'language' event
    * Calls detect language to determine language user typed in
@@ -79,7 +85,7 @@ io.on('connection', socket => {
    * @param {object} data 
    * @fires newuser
    */
-  socket.on('language', data => {
+  socket.on('language', async data => {
     let language;
     /**
      * GoogleTranslate will detect what language has been input or default to english
@@ -89,7 +95,7 @@ io.on('connection', socket => {
      * @param {object} detection looking for detection.language. 
      */
 
-    googleTranslate.detectLanguage(data.language, function(err, detection) {
+    let detectedLanguage = await googleTranslate.detectLanguage(data.language, function(err, detection) {
       // if unable to detect a language >> default to english
       if (!detection) {
         language = 'en';
@@ -108,12 +114,11 @@ io.on('connection', socket => {
 
     socket.broadcast.emit('new user', socket.username);
     // Anytime a new user signs in, console.log all users currently in chat
+    let chatHistory = await chat.find();
     io.emit('list-chat-users', Object.values(userGroup));
+    socket.emit('chathistory', chatHistory);
   });
 
-  // Listens for 'message' event
-  // Loops through connected sockets in the socket pool
-  // Translates message according to their language preference and emits 'message' event to socket
   /**
    * Listens for 'message' event. This will loop through all connected sockets in the socket pool. This will translate the message according to the user's specified language preferences. 
    * @param {string} message message event
@@ -124,7 +129,7 @@ io.on('connection', socket => {
     // Send user and their spoken language with each message they send
     let user = socket.username;
     let language = socket.language;
-          
+    chat.create({ message: data.message });
     for (let socket in socketPool) {
       if (socket !== data.user) {
         /**
@@ -136,19 +141,18 @@ io.on('connection', socket => {
                * @param {object} translation will use translation.translatedText 
                * 
                */
-        googleTranslate.translate(data.message, socketPool[socket], function(
-          err,
-          translation,
-        ) {
+        googleTranslate.translate(data.message, socketPool[socket], async function(err, translation) {
           /**
-                     * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
-                     * @event message 
-                     * @param {string} message message event
-                     * @param {object} translationData {user: object, color: string, message, string}
-                     * @param {object} user user object
-                     * @param {string} data.color color from the data object
-                     * @param {string} translation.translatedText translated version of the text
-                     */
+           * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
+           * @event message 
+           * @param {string} message message event
+           * @param {object} translationData {user: object, color: string, message, string}
+           * @param {object} user user object
+           * @param {string} data.color color from the data object
+           * @param {string} translation.translatedText translated version of the text
+           */
+
+
           io.to(`${socket}`).emit('message', {
             user: user,
             color: data.color,
@@ -160,7 +164,7 @@ io.on('connection', socket => {
     }
   });
 
-  // Listens for a 'disconnect' event
+
   /**
    * Listens for a 'disconnect' event when a user leaves the chat
    * @param {string} disconnect disconnect event

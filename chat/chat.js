@@ -2,7 +2,11 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com');
+const socket = io.connect('http://localhost:3000/');
+
+//Database
+const Chat = require('../model/chat/chat-model');
+let chat = new Chat();
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -53,9 +57,14 @@ socket.on('message', data => {
 
 // Listens for a 'new user' event and console logs data
 socket.on('new user', data => {
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
-  );
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
+});
+
+socket.on('chathistory', data => {
+  console.log(chalk.hex('#FF9F1C').bold(`Chat History`));
+  data.forEach(message => {
+    console.log(`${message.timestamp} ${message.message} `);
+  });
 });
 
 socket.on('list-chat-users', users => {
