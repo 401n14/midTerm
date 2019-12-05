@@ -62,11 +62,11 @@ socket.on('new user', data => {
 
 socket.on('chathistory', message => {
   // console.log(chalk.hex('#FF9F1C').bold(`Chat History`));
-  console.log(`${message.timestamp} ${message.message}`);
+  console.log(chalk.hex('#32E875')(`${message.timestamp} ${message.message}`));
 });
 
 socket.on('list-chat-users', users => {
-  console.log(chalk.hex('#FF9F1C')('Current Users:' + users));
+  console.log(chalk.hex('#FF9F1C')(`Current Users: ${users}\n`));
 });
 
 function getRandomColor() {
