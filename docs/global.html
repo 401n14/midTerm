@@ -152,7 +152,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line28">line 28</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line30">line 30</a>
     </li></ul></dd>
     
 
@@ -243,6 +243,68 @@ It represents the allowed data and it's type
 
         
             
+<h4 class="name" id="connection"><span class="type-signature"></span>connection<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    this is an event listener for 'connection' event. This is emitted when a new socket connects to the chat server
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="connectionSchema"><span class="type-signature">(constant) </span>connectionSchema<span class="type-signature"> :Object</span></h4>
 
 
@@ -316,6 +378,209 @@ It represents the allowed data and it's type
 
         
             
+<h4 class="name" id="disconnect"><span class="type-signature"></span>disconnect<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Listens for a 'disconnect' event when a user leaves the chat
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line170">line 170</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Fires:</h5>
+    <ul>
+        <li><a href="global.html#event:exit">event:exit</a></li>
+    </ul>
+
+
+
+
+        
+            
+<h4 class="name" id="language"><span class="type-signature"></span>language<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Listens for 'language' event
+Calls detect language to determine language user typed in
+Adds socket to socket pool with language preference
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Fires:</h5>
+    <ul>
+        <li><a href="global.html#event:newuser">event:newuser</a></li>
+    </ul>
+
+
+
+
+        
+            
+<h4 class="name" id="message"><span class="type-signature"></span>message<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Listens for 'message' event. This will loop through all connected sockets in the socket pool. This will translate the message according to the user's specified language preferences.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line122">line 122</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+    <h5>Fires:</h5>
+    <ul>
+        <li><a href="global.html#event:message">event:message</a></li>
+    </ul>
+
+
+
+
+        
+            
 <h4 class="name" id="PORT"><span class="type-signature">(constant) </span>PORT<span class="type-signature"> :number</span></h4>
 
 
@@ -370,7 +635,71 @@ It represents the allowed data and it's type
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line19">line 19</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line21">line 21</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="username"><span class="type-signature"></span>username<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    event listener for 'username' event
+This will set socket.username data.username
+Console logs to the server '${socket.username} joined the chat!'
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -721,7 +1050,7 @@ It represents the allowed data and it's type
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line84">line 84</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line89">line 89</a>
     </li></ul></dd>
     
 
@@ -838,7 +1167,7 @@ It represents the allowed data and it's type
 
         
 <div class="param-desc">
-    color random color string
+    random color string
 </div>
 
 
@@ -1243,7 +1572,7 @@ It represents the allowed data and it's type
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line130">line 130</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line136">line 136</a>
     </li></ul></dd>
     
 
@@ -1411,7 +1740,7 @@ It represents the allowed data and it's type
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line171">line 171</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line178">line 178</a>
     </li></ul></dd>
     
 
@@ -2003,7 +2332,7 @@ This will console log '==== START CHATTING ===='</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line143">line 143</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line149">line 149</a>
     </li></ul></dd>
     
 
@@ -2163,7 +2492,7 @@ This will console log '==== START CHATTING ===='</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line102">line 102</a>
+        <a href="server_app.js.html">server/app.js</a>, <a href="server_app.js.html#line107">line 107</a>
     </li></ul></dd>
     
 
@@ -2361,13 +2690,13 @@ This will console log '==== START CHATTING ===='</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:exit">exit</a></li><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:exit">exit</a></li><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connection">connection</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#message">message</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li><li><a href="global.html#username">username</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 11:25:19 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 11:47:34 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
