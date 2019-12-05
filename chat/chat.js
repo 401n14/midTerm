@@ -37,6 +37,7 @@ let users = {};
 
 /**
  *  Listens for a connect event and then will prompt the user for their name and language
+ * @name connect
  * @param {string} connect event listener for when a socket successfully connects to the server
  * @param {object}
  * Will console log: '>>>> Welcome to Transcribe <<<<'
@@ -93,6 +94,7 @@ socket.on('connect', () => {
 
 /**
  * listens for the 'line' event when a user inputs a message
+ * @name line
  * @param {string} line 'line' event
  * @param {object} message {message: string}
  * @fires message
@@ -113,7 +115,7 @@ rl.on('line', message => {
 // Listens for a 'message' event and console logs data
 /**
  * listens for a 'message' event and it will console log the message 
- * 
+ * @name message
  * @param {string} message 'message' event
  * @param {object} data will need data.color, data.user, data.language, and data.message
  * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
@@ -124,6 +126,7 @@ socket.on('message', data => {
 
 /**
  * Listens for a 'new user' event and console logs data
+ * @name newuser
  * @param {string} 'new user'
  * @param {object} data 
  * This will console log '>>>> ${data} joined the chat <<<<'
@@ -137,6 +140,7 @@ socket.on('new user', data => {
 
 /**
  * This will listen for 'list-chat-users'
+ * @name list-chat-users
  * @param {string} 'list-chat-users'
  * @param {object} users 
  * This will console log 'Current Users: ' + users'
@@ -155,6 +159,7 @@ function getRandomColor() {
 }
 /**
  * This will listen for the 'exit' event
+ * @name exit
  * @param {string} exit
  * @param {object} data 
  * This will console log \n>>>> ${data} left the chat <<<<\n

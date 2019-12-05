@@ -9,8 +9,6 @@
  * @requires NPM:socket.io
  * @requires NPM:dotenv
  * @requires NPM:googleTranslate
- * 
- * 
  */
 const express = require('express');
 const socketIO = require('socket.io');
@@ -57,10 +55,9 @@ let userGroup = {};
  * @param {object} socket 
  */
 io.on('connection', socket => {
-  // Listens for 'username' event 
   /**
    * event listener for 'username' event
-   * This will set socket.username data.username
+   * This will set socket.username = data.username
    * Console logs to the server '${socket.username} joined the chat!'
    * @name username
    * @param {string} username
