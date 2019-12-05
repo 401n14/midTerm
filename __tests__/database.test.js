@@ -4,8 +4,10 @@ const mongoose = require('mongoose');
 const MongoMemoryServer = require('mongodb-memory-server').default;
 const User = require('../model/user/user-model');
 const userDB = new User();
-// const Chat = require('../model/chat/chat-model');
-
+const Chat = require('../model/chat/chat-model');
+const chat = new Chat();
+const Connection = require('../model/connection/connection-model');
+const connection = new Connection();
 let mongod;
 
 const spyError = jest.spyOn(console, 'error'); 
@@ -32,17 +34,32 @@ let users = {
   user1: {
     username: 'jhon',
     password: 'jhonpasswordhh',
+    language: 'english',
+    displayName: 'BigJhon123',
   },
   user2: {
     username: 'samuel',
     password: 'sampassword',
+    language: 'english',
+    displayName: 'sam123',
   },
 };
+
+let messageData = {
+  message: 'Wow this app is cool',
+};
+
+let connectionData = {
+  connection: '1239ashhda812837813',
+};
+
 beforeAll( async (done) => {
   await startDatabase();
   spyError.mockReset();
   await userDB.create(users.user1);
   await userDB.create(users.user2);
+  await chat.create(messageData);
+  await connection.create(connectionData);
   done();
 });
 
@@ -52,7 +69,6 @@ describe('Database CRUD functionality tests', () => {
   let userInfo;
   it('Can read a created user', async () => {
     userInfo = await userDB.read('jhon');
-    console.log(userInfo);
     expect(userInfo[0].username).toBe('jhon');
   });
 
@@ -65,19 +81,18 @@ describe('Database CRUD functionality tests', () => {
     try {
       await userDB.create({user: 'sam'});
     } catch (error) {
-      // expect(spyError).toHaveBeenCalled();
-      expect(error).toBeDefined();
-    }
-  });
-  xit('Throws an error when given incorrect parameters', async () => {
-    try {
-      await userDB.read([123131]);
-    } catch (error) {
-      expect(spyError).toHaveBeenCalled();
       expect(error).toBeDefined();
     }
   });
 
-  xit('', async () => {});
-  xit('', async () => {});
+  it('Can succesfully delete a User', async () => {
+    let deleted = await userDB.delete(userInfo[0]._id);
+    expect(deleted.deletedCount).toBe(1);
+  });
+  
+  it('Can return the chat log', async () => {
+    let logs = await chat.find();
+    expect(logs[0].message).toBe('Wow this app is cool');
+  });
+
 });

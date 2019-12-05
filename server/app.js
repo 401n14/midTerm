@@ -108,7 +108,7 @@ io.on('connection', socket => {
 
     socket.broadcast.emit('new user', socket.username);
     // Anytime a new user signs in, console.log all users currently in chat
-    socket.emit('list-chat-users', Object.values(userGroup));
+    io.emit('list-chat-users', Object.values(userGroup));
   });
 
   // Listens for 'message' event
@@ -176,6 +176,7 @@ io.on('connection', socket => {
      */
     delete userGroup[socket.id];
     socket.broadcast.emit('exit', socket.username);
+    socket.broadcast.emit('list-chat-users', Object.values(userGroup));
     console.log(`${socket.username} left the chat`);
   });
 });

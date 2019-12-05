@@ -59,7 +59,7 @@ socket.on('new user', data => {
 });
 
 socket.on('list-chat-users', users => {
-  console.log('Current Users: ' + users);
+  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
 });
 
 function getRandomColor() {
