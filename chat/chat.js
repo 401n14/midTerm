@@ -14,7 +14,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com');
+const socket = io.connect('https://transcribe-jamm.herokuapp.com');
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -126,6 +126,7 @@ socket.on('message', data => {
  * Listens for a 'new user' event and console logs data
  * @param {string} 'new user'
  * @param {object} data 
+ * This will console log '>>>> ${data} joined the chat <<<<'
  * 
  */
 socket.on('new user', data => {
@@ -134,14 +135,29 @@ socket.on('new user', data => {
   );
 });
 
+/**
+ * This will listen for 'list-chat-users'
+ * @param {string} 'list-chat-users'
+ * @param {object} users 
+ * This will console log 'Current Users: ' + users'
+ */
 socket.on('list-chat-users', users => {
   console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
 });
 
+/**
+ * @function getRandomColor
+ * This function will use built in JS methods to create a random hex color
+ */
 function getRandomColor() {
   return '#' + parseInt(Math.random() * 0xffffff).toString(16);
 }
-
+/**
+ * This will listen for the 'exit' event
+ * @param {string} exit
+ * @param {object} data 
+ * This will console log \n>>>> ${data} left the chat <<<<\n
+ */
 socket.on('exit', data => {
   console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat <<<<\n`));
 });
