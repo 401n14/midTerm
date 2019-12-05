@@ -111,7 +111,7 @@ io.on('connection', socket => {
       
       chatHistory.forEach(chat => {
         googleTranslate.translate(chat.message, language, function(err, translation) {
-          socket.emit('chats', {timestamp: chat.timestamp, message: translation.translatedText});
+          socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
         });
       });
 
@@ -137,11 +137,12 @@ io.on('connection', socket => {
    */ 
   socket.on('message', async data => {
     // Send user and their spoken language with each message they send
-    let user = socket.username;
+    let user = socket.username.toUpperCase();
     let language = socket.language;
 
+    // console.log(user.toUpperCase());
     // Add chate to database
-    chat.create({ message: data.message });
+    chat.create({ message: data.message, username: user.toUpperCase() });
 
     for (let socket in socketPool) {
       if (socket !== data.user) {

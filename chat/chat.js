@@ -64,7 +64,7 @@ socket.on('chathistory', data => {
   console.log(chalk.hex('#2EC4B6')(`==== ${data} ====`));
 
   socket.on('chats', message =>{
-    console.log(chalk.hex('#32E875')(`${message.timestamp} ${message.message}`));
+    console.log(chalk.hex('#32E875')(`${message.user} - ${message.timestamp} - ${message.message}`));
   });
 });
 
