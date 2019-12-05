@@ -102,18 +102,19 @@ io.on('connection', socket => {
       } else {
         language = detection.language;
       }
+      socketPool[socket.id] = language;
+      socket.language = socketPool[socket.id];
 
+      // Display past chat history to users joining the chat
+      socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
       
       chatHistory.forEach(chat => {
         googleTranslate.translate(chat.message, language, function(err, translation) {
-          socket.emit('chathistory', {timestamp: chat.timestamp, message: translation.translatedText});
+          socket.emit('chats', {timestamp: chat.timestamp, message: translation.translatedText});
         });
       });
-   
 
-      socketPool[socket.id] = language;
-      socket.language = socketPool[socket.id];
     });
 
     /**
@@ -122,10 +123,9 @@ io.on('connection', socket => {
      * @param {string} socket.username looks for the username in the socket object  
      * @event newuser
      */
-
     socket.broadcast.emit('new user', socket.username);
+
     // Anytime a new user signs in, console.log all users currently in chat
-    // let chatHistory = await chat.find();
     io.emit('list-chat-users', Object.values(userGroup));
   });
 
@@ -139,7 +139,10 @@ io.on('connection', socket => {
     // Send user and their spoken language with each message they send
     let user = socket.username;
     let language = socket.language;
+
+    // Add chate to database
     chat.create({ message: data.message });
+
     for (let socket in socketPool) {
       if (socket !== data.user) {
         /**

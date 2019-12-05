@@ -60,9 +60,12 @@ socket.on('new user', data => {
   console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
 });
 
-socket.on('chathistory', message => {
-  // console.log(chalk.hex('#FF9F1C').bold(`Chat History`));
-  console.log(chalk.hex('#32E875')(`${message.timestamp} ${message.message}`));
+socket.on('chathistory', data => {
+  console.log(chalk.hex('#2EC4B6')(`==== ${data} ====`));
+
+  socket.on('chats', message =>{
+    console.log(chalk.hex('#32E875')(`${message.timestamp} ${message.message}`));
+  });
 });
 
 socket.on('list-chat-users', users => {
