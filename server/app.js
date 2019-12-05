@@ -190,3 +190,11 @@ const handleDisconnect = socket => {
   socket.broadcast.emit('exit', socket.username);
   console.log(`${socket.username} left the chat`);
 };
+
+// Set exports object to include all server methods to enable testing
+module.exports = {
+  setUsername,
+  setLanguage,
+  handleMessage,
+  handleDisconnect,
+};
