@@ -88,6 +88,10 @@ socket.on('connect', () => {
        * @param {object} language {language: string}
        * This will console log '==== START CHATTING ===='
        */
+
+      if(!language){
+        language = 'hello';
+      }
       socket.emit('language', { language });
       console.log(chalk.hex('#2EC4B6')(`\n==== CHAT STARTED ====\n`));
     });
