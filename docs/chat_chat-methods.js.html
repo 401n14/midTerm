@@ -34,9 +34,7 @@
  * @author Anna Li
  * @author Morgan T Shaw
  * 
- * @requires NPM:chalk
- * @requires NPM:readline
- * 
+ * @requires NPM:chalk * 
  */
 const chalk = require('chalk');
 
@@ -64,7 +62,7 @@ function getRandomColor() {
  * @param {object} users 
  */
 const printUsers = (users)=>{
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  console.log(chalk.hex('#FF9F1C')(`Current Users: ${users}\n`));
 };
 
 /**
@@ -73,10 +71,7 @@ const printUsers = (users)=>{
  * @param {string} data username of the person joining the chat 
  */
 const printNewUser = (data)=>{
-  console.log(typeof data);
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat &lt;&lt;&lt;&lt;\n`),
-  );
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat &lt;&lt;&lt;&lt;\n`));
 };
 
 /**
@@ -85,12 +80,28 @@ const printNewUser = (data)=>{
  * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
  */
 const printMessage = (data)=>{
-
   console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
-
 };
 
-module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage};</code></pre>
+/**
+ * @function printChatHistory
+ * @param {string} data chat history
+ * console logs ==== ${data} ====`
+ */
+const printChatHistory = (data)=>{
+  console.log(chalk.hex('#2EC4B6')(`==== ${data} ====`));
+};
+/**
+ * this will console log the last 5 messages
+ * @function printChats
+ * @param {object} message 
+ * console logs ${message.user} - ${message.timestamp} - ${message.message}
+ */
+const printChats = (message)=>{
+  console.log(chalk.hex('#32E875')(`${message.user} - ${message.timestamp} - ${message.message}`));
+};
+
+module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage, printChatHistory, printChats};</code></pre>
         </article>
     </section>
 
@@ -100,13 +111,13 @@ module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMess
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:list-chat-users">list-chat-users</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connection">connection</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#exit">exit</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#line">line</a></li><li><a href="global.html#list-chat-users">list-chat-users</a></li><li><a href="global.html#message">message</a></li><li><a href="global.html#newuser">newuser</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#printExit">printExit</a></li><li><a href="global.html#printMessage">printMessage</a></li><li><a href="global.html#printNewUser">printNewUser</a></li><li><a href="global.html#printUsers">printUsers</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li><li><a href="global.html#username">username</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:list-chat-users">list-chat-users</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chathistory">chathistory</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connection">connection</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#exit">exit</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#line">line</a></li><li><a href="global.html#list-chat-users">list-chat-users</a></li><li><a href="global.html#message">message</a></li><li><a href="global.html#newuser">newuser</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#printChatHistory">printChatHistory</a></li><li><a href="global.html#printChats">printChats</a></li><li><a href="global.html#printExit">printExit</a></li><li><a href="global.html#printMessage">printMessage</a></li><li><a href="global.html#printNewUser">printNewUser</a></li><li><a href="global.html#printUsers">printUsers</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li><li><a href="global.html#username">username</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 18:37:33 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 20:50:31 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
