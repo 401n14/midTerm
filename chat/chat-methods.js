@@ -34,6 +34,7 @@ function getRandomColor() {
  * @param {object} users 
  */
 const printUsers = (users)=>{
+  console.log(users);
   console.log(chalk.hex('#FF9F1C')(`Current Users: ${users}\n`));
 };
 
@@ -52,6 +53,7 @@ const printNewUser = (data)=>{
  * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
  */
 const printMessage = (data)=>{
+  console.log(data);
   console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
 };
 
@@ -70,6 +72,7 @@ const printChatHistory = (data)=>{
  * console logs ${message.user} - ${message.timestamp} - ${message.message}
  */
 const printChats = (message)=>{
+  console.log(message);
   let options = {
     weekday: 'long',
     year: 'numeric',
