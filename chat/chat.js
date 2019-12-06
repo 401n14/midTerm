@@ -14,7 +14,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://transcribe-jamm.herokuapp.com');
+const socket = io.connect('http://localhost:3000/');
 const chatMethods = require('./chat-methods.js');
 
 // Import chalk for terminal styling
@@ -58,7 +58,7 @@ socket.on('connect', () => {
    */
   rl.question(chalk.hex('#FF9F1C')('What is your name? '), username => {
     socket.username = username;
-    users[socket.username] = getRandomColor();
+    users[socket.username] = chatMethods.getRandomColor();
     /**
      * @event username
      * @param {string} 'username'
@@ -111,17 +111,15 @@ rl.on('line', message => {
   socket.emit('message', {user: socket.id, color: color, message});
 });
 
-
-// Listens for a 'message' event and console logs data
 /**
  * listens for a 'message' event and it will console log the message 
  * @name message
  * @param {string} message 'message' event
  * @param {object} data will need data.color, data.user, data.language, and data.message
- * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
+ * 
  */
 socket.on('message', data => {
-  console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
+  chatMethods.printMessage(data);
 });
 
 /**
@@ -129,13 +127,12 @@ socket.on('message', data => {
  * @name newuser
  * @param {string} 'new user'
  * @param {object} data 
- * This will console log '>>>> ${data} joined the chat <<<<'
  * 
  */
 socket.on('new user', data => {
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
-  );
+
+  chatMethods.printNewUser(data);
+
 });
 
 /**
@@ -143,27 +140,19 @@ socket.on('new user', data => {
  * @name list-chat-users
  * @param {string} 'list-chat-users'
  * @param {object} users 
- * This will console log 'Current Users: ' + users'
  */
 socket.on('list-chat-users', users => {
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  chatMethods.printUsers(users);
 });
 
-/**
- * This function will use built in JS methods to create a random hex color
- * @function getRandomColor
- * @returns {string} random color string
- */
-function getRandomColor() {
-  return '#' + parseInt(Math.random() * 0xffffff).toString(16);
-}
 /**
  * This will listen for the 'exit' event
  * @name exit
  * @param {string} exit
- * @param {object} data 
- * This will console log \n>>>> ${data} left the chat <<<<\n
+ * @param {string} data username of the person leaving the chat
+ * 
  */
 socket.on('exit', data =>{
+
   chatMethods.printExit(data);
 });

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: User</title>
+    <title>JSDoc: Source: chat/chat-methods.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,190 +17,82 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: User</h1>
+    <h1 class="page-title">Source: chat/chat-methods.js</h1>
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>User<span class="signature">(schema)</span><span class="type-signature"></span></h2>
-        
-            <div class="class-description">A class representing the Users collection in our database</div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    
-    <h4 class="name" id="User"><span class="type-signature"></span>new User<span class="signature">(schema)</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    The constructor for a User model
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>schema</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Object</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">A mongoose model that defines the schema for our data</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="model_user_user-model.js.html">model/user/user-model.js</a>, <a href="model_user_user-model.js.html#line14">line 14</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+/**
+ * @fileoverview chat-methods.js
+ * 
+ * @author Anna Li
+ * @author Morgan T Shaw
+ * 
+ * @requires NPM:chalk
+ * @requires NPM:readline
+ * 
+ */
+const chalk = require('chalk');
+
+/**
+ * @function printExit
+ * @param {string} data username of the person leaving the chat
+ * This will console log \n>>>> ${data} left the chat &lt;&lt;&lt;&lt;\n
+ */
+const printExit = (data) =>{
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat &lt;&lt;&lt;&lt;\n`));
+};
+
+/**
+ * This function will use built in JS methods to create a random hex color
+ * @function getRandomColor
+ * @returns {string} random color string
+ */
+function getRandomColor() {
+  return '#' + parseInt(Math.random() * 0xffffff).toString(16);
+}
+
+/**
+ * This will console log 'Current Users: ' + users'
+ * @function printUsers
+ * @param {object} users 
+ */
+const printUsers = (users)=>{
+  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+};
+
+/**
+ * This will console log '>>>> ${data} joined the chat &lt;&lt;&lt;&lt;'
+ * @function printNewUser
+ * @param {string} data username of the person joining the chat 
+ */
+const printNewUser = (data)=>{
+  console.log(typeof data);
+  console.log(
+    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat &lt;&lt;&lt;&lt;\n`),
+  );
+};
+
+/**
+ * @function printMessage
+ * @param {object} data 
+ * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
+ */
+const printMessage = (data)=>{
+
+  console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
+
+};
+
+module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage};</code></pre>
+        </article>
+    </section>
 
 
 

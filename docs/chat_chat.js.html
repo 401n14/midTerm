@@ -42,7 +42,8 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://transcribe-jamm.herokuapp.com');
+const socket = io.connect('http://localhost:3000/');
+const chatMethods = require('./chat-methods.js');
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -62,9 +63,9 @@ const rl = readline.createInterface({
 // To store users with their generated color
 let users = {};
 
-
 /**
  *  Listens for a connect event and then will prompt the user for their name and language
+ * @name connect
  * @param {string} connect event listener for when a socket successfully connects to the server
  * @param {object}
  * Will console log: '>>>> Welcome to Transcribe &lt;&lt;&lt;&lt;'
@@ -82,11 +83,10 @@ socket.on('connect', () => {
    * @param {string} 'What is your name?'
    * @param {object} username 
    * will assign a random color to the user
-   * 
    */
   rl.question(chalk.hex('#FF9F1C')('What is your name? '), username => {
     socket.username = username;
-    users[socket.username] = getRandomColor();
+    users[socket.username] = chatMethods.getRandomColor();
     /**
      * @event username
      * @param {string} 'username'
@@ -103,6 +103,7 @@ socket.on('connect', () => {
      * @param {object} language 
      * 
      */
+    
     rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
 
       /**
@@ -118,9 +119,9 @@ socket.on('connect', () => {
   });
 });
 
-
 /**
  * listens for the 'line' event when a user inputs a message
+ * @name line
  * @param {string} line 'line' event
  * @param {object} message {message: string}
  * @fires message
@@ -138,57 +139,50 @@ rl.on('line', message => {
   socket.emit('message', {user: socket.id, color: color, message});
 });
 
-// Listens for a 'message' event and console logs data
 /**
  * listens for a 'message' event and it will console log the message 
- * 
+ * @name message
  * @param {string} message 'message' event
  * @param {object} data will need data.color, data.user, data.language, and data.message
- * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
+ * 
  */
 socket.on('message', data => {
-  console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
+  chatMethods.printMessage(data);
 });
 
 /**
  * Listens for a 'new user' event and console logs data
+ * @name newuser
  * @param {string} 'new user'
  * @param {object} data 
- * This will console log '>>>> ${data} joined the chat &lt;&lt;&lt;&lt;'
  * 
  */
 socket.on('new user', data => {
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat &lt;&lt;&lt;&lt;\n`),
-  );
+
+  chatMethods.printNewUser(data);
+
 });
 
 /**
  * This will listen for 'list-chat-users'
+ * @name list-chat-users
  * @param {string} 'list-chat-users'
  * @param {object} users 
- * This will console log 'Current Users: ' + users'
  */
 socket.on('list-chat-users', users => {
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  chatMethods.printUsers(users);
 });
 
 /**
- * This function will use built in JS methods to create a random hex color
- * @function getRandomColor
- * @returns {string} random color string
- */
-function getRandomColor() {
-  return '#' + parseInt(Math.random() * 0xffffff).toString(16);
-}
-/**
  * This will listen for the 'exit' event
+ * @name exit
  * @param {string} exit
- * @param {object} data 
- * This will console log \n>>>> ${data} left the chat &lt;&lt;&lt;&lt;\n
+ * @param {string} data username of the person leaving the chat
+ * 
  */
-socket.on('exit', data => {
-  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat &lt;&lt;&lt;&lt;\n`));
+socket.on('exit', data =>{
+
+  chatMethods.printExit(data);
 });
 </code></pre>
         </article>
@@ -200,13 +194,13 @@ socket.on('exit', data => {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:exit">exit</a></li><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connection">connection</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#message">message</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li><li><a href="global.html#username">username</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Model.html">Model</a></li><li><a href="User.html">User</a></li></ul><h3>Events</h3><ul><li><a href="global.html#event:language">language</a></li><li><a href="global.html#event:list-chat-users">list-chat-users</a></li><li><a href="global.html#event:message">message</a></li><li><a href="global.html#event:newuser">newuser</a></li><li><a href="global.html#event:username">username</a></li></ul><h3>Global</h3><ul><li><a href="global.html#apiKey">apiKey</a></li><li><a href="global.html#chatSchema">chatSchema</a></li><li><a href="global.html#connect">connect</a></li><li><a href="global.html#connection">connection</a></li><li><a href="global.html#connectionSchema">connectionSchema</a></li><li><a href="global.html#createInterface">createInterface</a></li><li><a href="global.html#detectLanguage">detectLanguage</a></li><li><a href="global.html#disconnect">disconnect</a></li><li><a href="global.html#exit">exit</a></li><li><a href="global.html#getRandomColor">getRandomColor</a></li><li><a href="global.html#language">language</a></li><li><a href="global.html#line">line</a></li><li><a href="global.html#list-chat-users">list-chat-users</a></li><li><a href="global.html#message">message</a></li><li><a href="global.html#newuser">newuser</a></li><li><a href="global.html#PORT">PORT</a></li><li><a href="global.html#printExit">printExit</a></li><li><a href="global.html#printMessage">printMessage</a></li><li><a href="global.html#printNewUser">printNewUser</a></li><li><a href="global.html#printUsers">printUsers</a></li><li><a href="global.html#question">question</a></li><li><a href="global.html#translate">translate</a></li><li><a href="global.html#username">username</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 11:47:34 GMT-0800 (Pacific Standard Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 05 2019 18:37:33 GMT-0800 (Pacific Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>
