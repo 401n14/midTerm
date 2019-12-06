@@ -49,13 +49,19 @@ Start chatting
 ## Usage
 
 ### Enter a username
-![username](./images/NameLogin.png)
+![username](./images/enterUsername.png)
 
 ### Type in your preferred language
-![Language](./images/LanguageChoice.png)
+![Language](./images/hello.png)
 
-### Start Chatting
-![3users](./images/ExampleofThreeUsers.png)
+### The last 5 messages from the chat will be displayed
+![database](./images/databasemessages.png)
+
+### Start Chatting!
+![3users](./images/Chatstarted.png)
+
+### Messages will display name of sender and their language
+![newuserNotification](./images/examplemessage.png)
 
 ---------------------------
 ## Data Flow (Frontend, Backend, REST API)
