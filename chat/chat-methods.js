@@ -70,7 +70,18 @@ const printChatHistory = (data)=>{
  * console logs ${message.user} - ${message.timestamp} - ${message.message}
  */
 const printChats = (message)=>{
-  console.log(chalk.hex('#32E875')(`${message.user} - ${message.timestamp} - ${message.message}`));
+  let options = {
+    weekday: 'long',
+    year: 'numeric',
+    month:'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  };
+
+  let date = new Date(message.timestamp).toLocaleString('en-us', options);
+
+  console.log(chalk.hex('#32E875')(`${date} - ${message.user} - ${message.message}`));
 };
 
 module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage, printChatHistory, printChats};
