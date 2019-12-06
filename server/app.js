@@ -110,12 +110,18 @@ io.on('connection', socket => {
       // Display past chat history to users joining the chat
       socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
+      console.log(chatHistory);
       
-      chatHistory.forEach(chat =>  {
-        googleTranslate.translate(chat.message, language, async function(err, translation) {
-          await socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
+      const processChats = async () => {
+        await asyncForEach(chatHistory, async (chat) => {
+          await waitFor(85);
+          googleTranslate.translate(chat.message, language, async function(err, translation) {
+            await socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
+          });
         });
-      });
+      };
+
+      processChats();
     });
 
     /**
@@ -200,3 +206,10 @@ io.on('connection', socket => {
     console.log(`${socket.username} left the chat`);
   });
 });
+
+const asyncForEach = async (arr, callback) => {
+  for (let index = 0; index < arr.length; index++){
+    await callback(arr[index], index, arr);
+  }
+};
+const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
