@@ -8,7 +8,7 @@
  * @requires NPM:express
  * @requires NPM:socket.io
  * @requires NPM:dotenv
- * 
+ * @requires NPM:googleTranslate
  */
 const express = require('express');
 const socketIO = require('socket.io');
@@ -58,15 +58,16 @@ let userGroup = {};
 
 /**
  * this is an event listener for 'connection' event. This is emitted when a new socket connects to the chat server
+ * @name connection 
  * @param {string} connection 
  * @param {object} socket 
  */
 io.on('connection', socket => {
-  // Listens for 'username' event 
   /**
    * event listener for 'username' event
-   * This will set socket.username data.username
+   * This will set socket.username = data.username
    * Console logs to the server '${socket.username} joined the chat!'
+   * @name username
    * @param {string} username
    * @param {object} data This is looking for data.username
    * 
@@ -81,6 +82,7 @@ io.on('connection', socket => {
    * Listens for 'language' event
    * Calls detect language to determine language user typed in
    * Adds socket to socket pool with language preference 
+   * @name language
    * @param {string} language 
    * @param {object} data 
    * @fires newuser
@@ -131,6 +133,7 @@ io.on('connection', socket => {
 
   /**
    * Listens for 'message' event. This will loop through all connected sockets in the socket pool. This will translate the message according to the user's specified language preferences. 
+   * @name message
    * @param {string} message message event
    * @param {object} data The user inputed data. Function will use data.message & data.color
    * @fires message
@@ -181,16 +184,19 @@ io.on('connection', socket => {
 
   /**
    * Listens for a 'disconnect' event when a user leaves the chat
+   * @name disconnect
    * @param {string} disconnect disconnect event
    * @param {object} socket function will use socket.username
    * @fires exit
+   * @fires list-chat-users
    */
   socket.on('disconnect', () => {
     /**
      * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
      * @param {string} exit exit event 
      * @param {string} socket.username username of the socket that has left the chat
-     * @event exit 
+     * @event exit
+     * @event list-chat-users  
      */
     delete userGroup[socket.id];
     socket.broadcast.emit('exit', socket.username);
