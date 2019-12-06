@@ -14,7 +14,11 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://transcribe-jamm.herokuapp.com');
+const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+
+//Database
+const Chat = require('../model/chat/chat-model');
+let chat = new Chat();
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -56,7 +60,7 @@ socket.on('connect', () => {
    * will assign a random color to the user
    * 
    */
-  rl.question(chalk.hex('#FF9F1C')('What is your name? '), username => {
+  rl.question(chalk.hex('#FF9F1C')('Please enter a username: '), username => {
     socket.username = username;
     users[socket.username] = getRandomColor();
     /**
@@ -65,7 +69,6 @@ socket.on('connect', () => {
      * @param {object} username {username: string}
      */
     socket.emit('username', { username });
-
     /**
      * Use readline to prompt for language
      * @method question (query: string, callback)
@@ -75,21 +78,18 @@ socket.on('connect', () => {
      * @param {object} language 
      * 
      */
-    rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
-
+    rl.question(chalk.hex('#FF9F1C')('Please type hello in your preferred language: '), language => {
       /**
        * @event language
        * @param {string} 'language'
        * @param {object} language {language: string}
        * This will console log '==== START CHATTING ===='
        */
-
       socket.emit('language', { language });
-      console.log(chalk.hex('#2EC4B6')(`\n==== START CHATTING ====\n`));
+      console.log(chalk.hex('#2EC4B6')(`\n==== CHAT STARTED ====\n`));
     });
   });
 });
-
 
 /**
  * listens for the 'line' event when a user inputs a message
@@ -110,7 +110,7 @@ rl.on('line', message => {
   socket.emit('message', {user: socket.id, color: color, message});
 });
 
-// Listens for a 'message' event and console logs data
+
 /**
  * listens for a 'message' event and it will console log the message 
  * 
@@ -130,9 +130,15 @@ socket.on('message', data => {
  * 
  */
 socket.on('new user', data => {
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
-  );
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
+});
+
+socket.on('chathistory', data => {
+  console.log(chalk.hex('#2EC4B6')(`==== ${data} ====`));
+
+  socket.on('chats', message =>{
+    console.log(chalk.hex('#32E875')(`${message.user} - ${message.timestamp} - ${message.message}`));
+  });
 });
 
 /**
@@ -142,7 +148,7 @@ socket.on('new user', data => {
  * This will console log 'Current Users: ' + users'
  */
 socket.on('list-chat-users', users => {
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  console.log(chalk.hex('#FF9F1C')(`Current Users: ${users}\n`));
 });
 
 /**
