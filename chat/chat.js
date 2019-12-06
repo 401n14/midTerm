@@ -2,7 +2,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('http://localhost:3000/');
+const socket = io.connect('https://n14-transcribe.herokuapp.com/');
 
 //Database
 const Chat = require('../model/chat/chat-model');
@@ -27,7 +27,7 @@ socket.on('connect', () => {
   console.log(chalk.hex('#2EC4B6')(`>>>> Welcome to Transcribe <<<<\n`));
 
   // Use readline to prompt for name
-  rl.question(chalk.hex('#FF9F1C')('What is your name? '), username => {
+  rl.question(chalk.hex('#FF9F1C')('Please enter a username: '), username => {
     socket.username = username;
     users[socket.username] = getRandomColor();
     // Emits a 'username' event with user input
@@ -35,7 +35,7 @@ socket.on('connect', () => {
 
     // Use readline to prompt for language
 
-    rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
+    rl.question(chalk.hex('#FF9F1C')('Please type hello in your preferred language: '), language => {
       // Emits a 'language' event with user input
       socket.emit('language', { language });
       console.log(chalk.hex('#2EC4B6')(`\n==== CHAT STARTED ====\n`));
