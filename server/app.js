@@ -108,8 +108,6 @@ io.on('connection', socket => {
       // Display past chat history to users joining the chat
       socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
-
-      console.log(chatHistory);
       
       chatHistory.forEach(chat => {
         googleTranslate.translate(chat.message, language, function(err, translation) {

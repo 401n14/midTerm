@@ -14,7 +14,9 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+// const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+const socket = io.connect('http://localhost:3000');
+
 
 //Database
 const Chat = require('../model/chat/chat-model');
