@@ -4,8 +4,12 @@
 ---------------------------------
 ## We are deployed on Heroku
 
-[Project link](https://n14-transcribe.herokuapp.com)
-[Travis CI](https://www.travis-ci.com/401n14/midTerm)
+* [Project link](https://n14-transcribe.herokuapp.com)
+
+* [Travis CI](https://www.travis-ci.com/401n14/midTerm)
+
+* [Documentation](https://n14-transcribe.herokuapp.com/docs/)
+
 ---------------------------------
 ## Web Application
 ***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
