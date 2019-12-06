@@ -14,9 +14,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-// const socket = io.connect('https://n14-transcribe.herokuapp.com/');
-const socket = io.connect('http://localhost:3000');
-
+const socket = io.connect('https://n14-transcribe.herokuapp.com/');
 
 //Database
 const Chat = require('../model/chat/chat-model');
@@ -112,7 +110,7 @@ rl.on('line', message => {
   socket.emit('message', {user: socket.id, color: color, message});
 });
 
-// Listens for a 'message' event and console logs data
+
 /**
  * listens for a 'message' event and it will console log the message 
  * 
