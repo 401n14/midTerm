@@ -170,13 +170,15 @@ io.on('connection', socket => {
    * @param {string} disconnect disconnect event
    * @param {object} socket function will use socket.username
    * @fires exit
+   * @fires list-chat-users
    */
   socket.on('disconnect', () => {
     /**
      * event that occurs when a user leaves the chat. It will console log on the server '${socket.username} left the chat'
      * @param {string} exit exit event 
      * @param {string} socket.username username of the socket that has left the chat
-     * @event exit 
+     * @event exit
+     * @event list-chat-users  
      */
     delete userGroup[socket.id];
     socket.broadcast.emit('exit', socket.username);
