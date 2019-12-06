@@ -43,10 +43,7 @@ const printUsers = (users)=>{
  * @param {string} data username of the person joining the chat 
  */
 const printNewUser = (data)=>{
-  console.log(typeof data);
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
-  );
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
 };
 
 /**
@@ -55,9 +52,7 @@ const printNewUser = (data)=>{
  * will console log '${data.color} ).bold( ${data.user} (${data.language}): ) + ${data.message} '
  */
 const printMessage = (data)=>{
-
   console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
-
 };
 
 module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage};
