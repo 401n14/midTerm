@@ -15,13 +15,10 @@
 // Import socket.io client
 const io = require('socket.io-client');
 
-const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+// const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+const socket = io.connect('http://localhost:3000');
 
 const chatMethods = require('./chat-methods.js');
-//Database
-const Chat = require('../model/chat/chat-model');
-let chat = new Chat();
-
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -63,6 +60,10 @@ socket.on('connect', () => {
    * will assign a random color to the user
    */
   rl.question(chalk.hex('#FF9F1C')('Please enter a username: '), username => {
+    // if user does not input a username >> default to anonymous
+    if(!username) {
+      username = 'Anonymous';
+    }
     socket.username = username;
     users[socket.username] = chatMethods.getRandomColor();
     /**
