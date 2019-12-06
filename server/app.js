@@ -110,7 +110,6 @@ io.on('connection', socket => {
       // Display past chat history to users joining the chat
       socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
-      console.log(chatHistory);
       
       const processChats = async () => {
         await asyncForEach(chatHistory, async (chat) => {
