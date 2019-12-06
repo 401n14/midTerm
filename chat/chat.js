@@ -14,8 +14,13 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://transcribe-jamm.herokuapp.com');
+
+const socket = io.connect('http://localhost:3000/');
 const chatMethods = require('./chat-methods.js');
+//Database
+const Chat = require('../model/chat/chat-model');
+let chat = new Chat();
+
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -56,7 +61,7 @@ socket.on('connect', () => {
    * @param {object} username 
    * will assign a random color to the user
    */
-  rl.question(chalk.hex('#FF9F1C')('What is your name? '), username => {
+  rl.question(chalk.hex('#FF9F1C')('Please enter a username: '), username => {
     socket.username = username;
     users[socket.username] = chatMethods.getRandomColor();
     /**
@@ -65,7 +70,6 @@ socket.on('connect', () => {
      * @param {object} username {username: string}
      */
     socket.emit('username', { username });
-
     /**
      * Use readline to prompt for language
      * @method question (query: string, callback)
@@ -75,18 +79,15 @@ socket.on('connect', () => {
      * @param {object} language 
      * 
      */
-    
-    rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
-
+    rl.question(chalk.hex('#FF9F1C')('Please type hello in your preferred language: '), language => {
       /**
        * @event language
        * @param {string} 'language'
        * @param {object} language {language: string}
        * This will console log '==== START CHATTING ===='
        */
-
       socket.emit('language', { language });
-      console.log(chalk.hex('#2EC4B6')(`\n==== START CHATTING ====\n`));
+      console.log(chalk.hex('#2EC4B6')(`\n==== CHAT STARTED ====\n`));
     });
   });
 });
@@ -130,9 +131,20 @@ socket.on('message', data => {
  * 
  */
 socket.on('new user', data => {
-
   chatMethods.printNewUser(data);
+});
+/**
+ * event listener for the chathistory event
+ * @name chathistory
+ * @param chathistory event
+ * @param
+ */
+socket.on('chathistory', data => {
+  chatMethods.printChatHistory(data);
 
+  socket.on('chats', message =>{
+    chatMethods.printChats(message);
+  });
 });
 
 /**
@@ -153,6 +165,5 @@ socket.on('list-chat-users', users => {
  * 
  */
 socket.on('exit', data =>{
-
   chatMethods.printExit(data);
 });

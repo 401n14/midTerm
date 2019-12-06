@@ -34,7 +34,7 @@ function getRandomColor() {
  * @param {object} users 
  */
 const printUsers = (users)=>{
-  console.log(chalk.hex('#FF9F1C')('Current Users: ' + users));
+  console.log(chalk.hex('#FF9F1C')(`Current Users: ${users}\n`));
 };
 
 /**
@@ -55,4 +55,22 @@ const printMessage = (data)=>{
   console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
 };
 
-module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage};
+/**
+ * @function printChatHistory
+ * @param {string} data chat history
+ * console logs ==== ${data} ====`
+ */
+const printChatHistory = (data)=>{
+  console.log(chalk.hex('#2EC4B6')(`==== ${data} ====`));
+};
+/**
+ * this will console log the last 5 messages
+ * @function printChats
+ * @param {object} message 
+ * console logs ${message.user} - ${message.timestamp} - ${message.message}
+ */
+const printChats = (message)=>{
+  console.log(chalk.hex('#32E875')(`${message.user} - ${message.timestamp} - ${message.message}`));
+};
+
+module.exports = {printExit, getRandomColor, printUsers, printNewUser, printMessage, printChatHistory, printChats};

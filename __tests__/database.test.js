@@ -47,6 +47,7 @@ let users = {
 
 let messageData = {
   message: 'Wow this app is cool',
+  username: 'jhon',
 };
 
 let connectionData = {
