@@ -12,6 +12,7 @@ const Schema = mongoose.Schema;
  */
 const chatSchema = new mongoose.Schema({
   message: {type: String, required: true},
+  username: {type: String, required: true},
   userID : {type: Schema.Types.ObjectId},
   timestamp: {type: Date, default: new Date()},
 });

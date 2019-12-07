@@ -1,0 +1,25 @@
+{
+    "name": "midterm",
+    "version": "1.0.0",
+    "description": "CodeFellows 401n14 mid term project - client side",
+    "main": "index.js",
+    "dependencies": {
+        "chalk": "^3.0.0",
+        "readline": "^1.3.0",
+        "socket.io-client": "^2.3.0"
+    },
+    "devDependencies": {
+        "eslint": "^6.7.2"
+    },
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/401n14/midTerm.git"
+    },
+    "author": "nightJAMMM team",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/401n14/midTerm/issues"
+    },
+    "homepage": "https://github.com/401n14/midTerm#readme"
+}
