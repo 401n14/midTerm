@@ -17,6 +17,7 @@ const io = require('socket.io-client');
 
 const socket = io.connect('https://n14-transcribe.herokuapp.com/');
 
+
 const chatMethods = require('./chat-methods.js');
 
 // Import chalk for terminal styling
