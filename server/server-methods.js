@@ -90,8 +90,7 @@ const handleMessage = async (server, socket, data) => {
   }
 
   for (let socket in socketPool) {
-    if (socket !== data.user) {
-      /**
+    /**
              * GoogleTranslate will translate the user input message
              * @method translate
              * @param {string} data.message the user inputted message
@@ -100,8 +99,8 @@ const handleMessage = async (server, socket, data) => {
              * @param {object} translation will use translation.translatedText
              *
              */
-      googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
-        /**
+    googleTranslate.translate(data.message, socketPool[socket], function (err, translation) {
+      /**
                  * sends the translated message consisting of '{user: user, color: data.color, message: translation.translatedText}'
                  * @event message
                  * @param {string} message message event
@@ -110,14 +109,13 @@ const handleMessage = async (server, socket, data) => {
                  * @param {string} data.color color from the data object
                  * @param {string} translation.translatedText translated version of the text
                  */
-        server.to(`${socket}`).emit('message', {
-          user: user,
-          color: data.color,
-          message: translation.translatedText,
-          language,
-        });
+      server.to(`${socket}`).emit('message', {
+        user: user,
+        color: data.color,
+        message: translation.translatedText,
+        language,
       });
-    }
+    });
   }
 };
 
@@ -135,7 +133,7 @@ const handleDisconnect = socket => {
 };
 
 const asyncForEach = async (arr, callback) => {
-  for (let index = 0; index < arr.length; index++){
+  for (let index = arr.length -1 ; index >= 0; index--){
     await callback(arr[index], index, arr);
   }
 };
