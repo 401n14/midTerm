@@ -9,7 +9,7 @@ let chat = new Chat();
  * @constant apiKey
  * @type {string}
  */
-const apiKey = process.env.GOOGLE_API_KEY || 'AIzaSyCNYLZpi8VQNnQ6EqR03itPSMW3fWIxH7g';
+const apiKey = process.env.GOOGLE_API_KEY;
 
 let options = {
   concurrentLimit: 20,
@@ -17,6 +17,7 @@ let options = {
 };
 
 const googleTranslate = require('google-translate')(apiKey, options);
+
 let socketPool = {};
 let userGroup = {};
 
