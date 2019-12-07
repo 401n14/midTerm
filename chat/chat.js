@@ -2,7 +2,7 @@
 
 // Import socket.io client
 const io = require('socket.io-client');
-const socket = io.connect('https://n14-transcribe.herokuapp.com');
+const socket = io.connect('http://localhost:3000');
 
 // Import chalk for terminal styling
 const chalk = require('chalk');
@@ -17,14 +17,6 @@ const rl = readline.createInterface({
 // To store users with their generated color
 let users = {};
 
-/////////////////// USE THIS SECTION FOR NAMED FUNCTION REFACTORING //////////////////////////////
-
-const socketExit = data => {
-  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat <<<<\n`));
-};
-
-////////////////// CLOSE OF FUNCTION REFACTORING ////////////////////////////////////////////////
-
 // Listens for a 'connect' event
 // Prompt for name and language
 socket.on('connect', () => {
@@ -35,15 +27,24 @@ socket.on('connect', () => {
     socket.username = username;
     users[socket.username] = getRandomColor();
     // Emits a 'username' event with user input
-    socket.emit('username', { username });
+    socket.emit('username', {
+      username
+    });
 
     // Use readline to prompt for language
 
-    rl.question(chalk.hex('#FF9F1C')('Please input your preferred language in your preferred language: '), language => {
-      // Emits a 'language' event with user input
-      socket.emit('language', { language });
-      console.log(chalk.hex('#2EC4B6')(`\n==== START CHATTING ====\n`));
-    });
+    rl.question(
+      chalk.hex('#FF9F1C')(
+        'Please input your preferred language in your preferred language: ',
+      ),
+      language => {
+        // Emits a 'language' event with user input
+        socket.emit('language', {
+          language
+        });
+        console.log(chalk.hex('#2EC4B6')(`\n==== START CHATTING ====\n`));
+      },
+    );
   });
 });
 
@@ -51,19 +52,24 @@ socket.on('connect', () => {
 // A 'message' event is emitted containing the socket id along with the message entered
 rl.on('line', message => {
   let color = users[socket.username];
-  socket.emit('message', {user: socket.id, color: color, message});
+  socket.emit('message', {
+    user: socket.id,
+    color: color,
+    message
+  });
 });
 
 // Listens for a 'message' event and console logs data
 socket.on('message', data => {
-  console.log(chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) + `${data.message}`);
+  console.log(
+    chalk.hex(`${data.color}`).bold(`${data.user} (${data.language}): `) +
+    `${data.message}`,
+  );
 });
 
 // Listens for a 'new user' event and console logs data
 socket.on('new user', data => {
-  console.log(
-    chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`),
-  );
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} joined the chat <<<<\n`));
 });
 
 socket.on('list-chat-users', users => {
@@ -74,7 +80,6 @@ function getRandomColor() {
   return '#' + parseInt(Math.random() * 0xffffff).toString(16);
 }
 
-socket.on('exit', socketExit);
-
-
-
+socket.on('exit', data => {
+  console.log(chalk.hex('#32E875').bold(`\n>>>> ${data} left the chat <<<<\n`));
+});
