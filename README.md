@@ -55,7 +55,7 @@ ts-chat
 ![TranslationDemo](./images/Translation.png)
 
 ## UML Diagram (Frontend, Backend, REST API)
-![Data Flow Diagram](/assets/img/Flowchart.png)
+![Data Flow Diagram](./images/UMLDiagram.png)
 
 
 ## Authors
