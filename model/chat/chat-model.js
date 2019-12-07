@@ -15,7 +15,7 @@ class ChatHistory extends Model{
    */
   find() {
     //Finds the last five records in the chat history and orders them by their timestamp with the newest message being first;
-    return this.schema.find().sort({ timestamp: 'ascending' }).limit(5);
+    return this.schema.find().sort({ timestamp: 'descending' }).limit(5);    
   }
 }
 

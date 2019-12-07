@@ -24,11 +24,7 @@ class Model {
    * @returns {Error} - If there was an error during creation of the record this will provide more detailed documentation
    */
   create(record){
-    try {
-      return this.schema.create(record);
-    } catch (error) {
-      console.error(error);
-    }
+    return this.schema.create(record);
   }
   
   /**
@@ -42,20 +38,23 @@ class Model {
   read(query){
     //The returns from this function need to be awaited
     //let userRecord = await user.read(query);
-    try {
-      //If the query passed in is of type ID then we do a find by ID else we search by username
-      //That way this read function can be used with ID's from chat and connection or with username from users
-      if(mongoose.Types.ObjectId.isValid(query)) return this.schema.findById(query);
-      else return this.schema.find({username: query});
-      
-    } catch (error) {
-      console.error(error);
-    }
+    //If the query passed in is of type ID then we do a find by ID else we search by username
+    //That way this read function can be used with ID's from chat and connection or with username from users
+    if(mongoose.Types.ObjectId.isValid(query)) return this.schema.findById(query);
+    else return this.schema.find({username: query});
+  }
+  /**
+   * Updates a specific recoord with new content
+   * @param {mongoose.Types.ObjectId}   _id   The id of user record we want to change
+   * @param {object}                  record  The new data we want our record to be updated to
+   * @return {Promise<object>}                The updated record and its contents
+   */
+
+  update(_id, record) {
+    return this.schema.updateOne({ _id }, record);
   }
 
-  //method for updating users 
-  //(Do users need to be updated? Change password maybe?)
-
+  
   /**
  * Delete allows us to delete a record from the collection base on an ID
  * @method
@@ -64,11 +63,7 @@ class Model {
  * @returns {Error} - If there is an error during the delete process this will notify the user
  */
   delete(_id){
-    try {
-      return this.schema.deleteOne({_id});
-    } catch (error) {
-      console.error(error);
-    }
+    return this.schema.deleteOne({_id});
   }
 
 }

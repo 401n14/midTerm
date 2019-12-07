@@ -11,9 +11,10 @@ const Schema = mongoose.Schema;
  * @type {Object} - Moongoose Schema constructor
  */
 const chatSchema = new mongoose.Schema({
-  message: {type: String, required: true},
+  message: {type: String, required: false},
+  username: {type: String, required: true},
   userID : {type: Schema.Types.ObjectId},
-  timestamp: {type: Date, default: new Date()},
+  timestamp: {type: Date, default: Date.now()},
 });
 
 
