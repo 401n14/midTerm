@@ -46,7 +46,7 @@ let options = {
 };
 const googleTranslate = require('google-translate')(apiKey, options);
 
-
+//allows our project to use JSDocs
 app.use('/docs', express.static('./docs'));
 
 const server = app.listen(PORT, () => console.log(`Listening on ${PORT}`));
@@ -107,14 +107,34 @@ io.on('connection', socket => {
       socketPool[socket.id] = language;
       socket.language = socketPool[socket.id];
 
-      // Display past chat history to users joining the chat
+      /**
+       * Display past chat history to users joining the chat
+       * @event chathistory
+       * @param {string} 'CHAT HISTORY'
+       */
       socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
       
+      /**
+       * asyce function that will find chat history from the database, translate, and print in the users language
+       * @function processChats
+       * @param  {object} chatHistory
+       * @param  {object} chat 
+       * @param  {string} language
+       * @param  {error} err
+       * @param  {object} translation
+       * @fires chats event
+       */
       const processChats = async () => {
         await asyncForEach(chatHistory, async (chat) => {
           await waitFor(85);
           googleTranslate.translate(chat.message, language, async function(err, translation) {
+            /**
+             * this will emit the chats event and sends the chat history data
+             * @event chats 
+             * @param {string} 'chats'
+             * @param {object} databaseHistory {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText}
+             */
             await socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
           });
         });
@@ -190,7 +210,6 @@ io.on('connection', socket => {
    * Listens for a 'disconnect' event when a user leaves the chat
    * @name disconnect
    * @param {string} disconnect disconnect event
-   * @param {object} socket function will use socket.username
    * @fires exit
    * @fires list-chat-users
    */
@@ -208,7 +227,11 @@ io.on('connection', socket => {
     console.log(`${socket.username} left the chat`);
   });
 });
-
+/**
+ * @function asyncForEach
+ * @param {array} arr 
+ * @param {function} callback 
+ */
 const asyncForEach = async (arr, callback) => {
   for (let index = 0; index < arr.length; index++){
     await callback(arr[index], index, arr);
