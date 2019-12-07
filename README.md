@@ -54,15 +54,9 @@ ts-chat
 ### Messages will be translated and displayed based on the user's language
 ![TranslationDemo](./images/Translation.png)
 
-## Data Flow (Frontend, Backend, REST API)
-***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
+## UML Diagram (Frontend, Backend, REST API)
 ![Data Flow Diagram](/assets/img/Flowchart.png)
 
-## Data Model
-
-### Overall Project Schema
-***[Add a description of your DB schema. Explain the relationships to me.]***
-![Database Schema](/assets/img/ERD.png)
 
 ## Authors
 * Nadya Ilinskaya
