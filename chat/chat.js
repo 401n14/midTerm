@@ -17,6 +17,7 @@ const io = require('socket.io-client');
 
 const socket = io.connect('https://n14-transcribe.herokuapp.com/');
 
+
 const chatMethods = require('./chat-methods.js');
 
 // Import chalk for terminal styling
@@ -106,6 +107,9 @@ socket.on('connect', () => {
  */
 rl.on('line', message => {
   let color = users[socket.username];
+  if (!message) {
+    message = '[empty message]';
+  }
   /**
    * event containing the socket id along with the message entered
    * @event message

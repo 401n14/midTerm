@@ -143,13 +143,16 @@ io.on('connection', socket => {
    * @fires message
    */ 
   socket.on('message', async data => {
+    console.log(data);
     // Send user and their spoken language with each message they send
     let user = socket.username.toUpperCase();
     let language = socket.language;
 
-    // console.log(user.toUpperCase());
-    // Add chate to database
-    chat.create({ message: data.message, username: user.toUpperCase()});
+  
+    // Add chat to database if message is not empty
+    if(data.message !== '[empty message]') {
+      chat.create({ message: data.message, username: user.toUpperCase()});
+    }
 
     for (let socket in socketPool) {
       if (socket !== data.user) {
