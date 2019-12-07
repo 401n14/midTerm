@@ -1,11 +1,10 @@
 # Project "Transcribe"
 ## Production Links
 
-* [Server](https://n14-transcribe.herokuapp.com) 
+* [Server](https://transcribe-jamm.herokuapp.com) 
 * [Client](https://www.npmjs.com/package/transcribe-chat)
-* [Documentation](https://n14-transcribe.herokuapp.com/docs/)
+* [Documentation](https://transcribe-jamm.herokuapp.com/docs/)
 
----------------------------------
 ## Node Application
 
 The application is a communication platform for realtime chat between two or more users. We utilized NodeJS, JavaScript, Google Translate API, and MongoDB. 
@@ -13,8 +12,6 @@ The application is a communication platform for realtime chat between two or mor
 Users are able to create a username, specify a language, and then enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
 
 We have expanded this project to persist messages into a mongo database. We display the last 5 messages in the chat server to a user upon initial login. 
-
----------------------------------
 
 ## Main Dependencies
 
@@ -24,12 +21,11 @@ We have expanded this project to persist messages into a mongo database. We disp
 - [Google Translate API](https://www.npmjs.com/package/google-translate)
 - [MongoDB](https://www.mongodb.com/) 
 
----------------------------------
 ## To install application
 * Make sure you have [NodeJS](https://nodejs.org/en/) installed
 * Run npm command:
 ```
-npm i transcribe-chat
+npm install -g transcribe-chat
 ```
 * Type command below in your terminal bash prompt to start [Transcribe-chat](https://www.npmjs.com/package/transcribe-chat) application
 
@@ -37,8 +33,6 @@ npm i transcribe-chat
 ts-chat
 ``` 
 * Chat up!
-
----------------------------------
 
 ## Usage
 
@@ -60,19 +54,8 @@ ts-chat
 ### Messages will be translated and displayed based on the user's language
 ![TranslationDemo](./images/Translation.png)
 
----------------------------
-## Data Flow (Frontend, Backend, REST API)
-***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
-![Data Flow Diagram](/assets/img/Flowchart.png)
-
----------------------------
-## Data Model
-
-### Overall Project Schema
-***[Add a description of your DB schema. Explain the relationships to me.]***
-![Database Schema](/assets/img/ERD.png)
-
----------------------------
+## UML Diagram (Frontend, Backend, REST API)
+![Data Flow Diagram](./images/UMLDiagram.png)
 
 
 ## Authors
