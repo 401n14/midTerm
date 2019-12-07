@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 'use strict';
 /**
  * @fileoverview chat.js
@@ -9,13 +10,13 @@
  * @requires NPM:socket.io
  * @requires NPM:chalk
  * @requires NPM:readline
- * 
  */
 
 // Import socket.io client
 const io = require('socket.io-client');
 
-const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+// const socket = io.connect('https://n14-transcribe.herokuapp.com/');
+const socket = io.connect('http://localhost:3000');
 
 const chatMethods = require('./chat-methods.js');
 
@@ -31,7 +32,7 @@ const readline = require('readline');
  */
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
+  output: process.stdout,
 });
 
 // To store users with their generated color
@@ -76,7 +77,7 @@ socket.on('connect', () => {
      * @method question (query: string, callback)
      * @param {method} chalk.hex method that requires two params (color: string)
      * @param {string} '#FF9F1C' color of the string
-     * @param {string} 'Please input your preferred language in your preferred language: '
+     * @param {string} 'Please type hello in your preferred language: '
      * @param {object} language 
      * 
      */
@@ -85,9 +86,8 @@ socket.on('connect', () => {
        * @event language
        * @param {string} 'language'
        * @param {object} language {language: string}
-       * This will console log '==== START CHATTING ===='
+       * This will console log '==== CHAT STARTED ===='
        */
-
       if(!language){
         language = 'hello';
       }
@@ -125,7 +125,6 @@ rl.on('line', message => {
  * @name message
  * @param {string} message 'message' event
  * @param {object} data will need data.color, data.user, data.language, and data.message
- * 
  */
 socket.on('message', data => {
   chatMethods.printMessage(data);
@@ -142,7 +141,7 @@ socket.on('new user', data => {
   chatMethods.printNewUser(data);
 });
 /**
- * event listener for the chathistory event
+ * event listener for the 'chathistory' event. 
  * @name chathistory
  * @param chathistory event
  * @param
@@ -150,6 +149,12 @@ socket.on('new user', data => {
 socket.on('chathistory', data => {
   chatMethods.printChatHistory(data);
 
+  /**
+  * event listener for the 'chats' event. This will call printChats function. 
+  * @name chats 
+  * @param {string} chats event
+  * @param {object} message message object that will be passed to the printChats function. 
+  */
   socket.on('chats', message =>{
     chatMethods.printChats(message);
   });
