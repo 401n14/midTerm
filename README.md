@@ -67,6 +67,9 @@ Start chatting
 ### Messages will display name of sender and their language
 ![newuserNotification](./images/examplemessage.png)
 
+### Messages will be translated and displayed based on the user's language
+![TranslationDemo](./images/Translation.png)
+
 ---------------------------
 ## Data Flow (Frontend, Backend, REST API)
 ***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
