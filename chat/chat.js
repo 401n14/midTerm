@@ -106,6 +106,9 @@ socket.on('connect', () => {
  */
 rl.on('line', message => {
   let color = users[socket.username];
+  if (!message) {
+    message = '[empty message]';
+  }
   /**
    * event containing the socket id along with the message entered
    * @event message
