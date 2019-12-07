@@ -2,11 +2,11 @@
     "name": "transcribe-chat",
     "author": "nightJAMMM team @ CodeFellows Seattle",
     "license": "ISC",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "CodeFellows 401n14 mid term project - client side",
     "main": "chat.js",
     "bin": {
-        "transcribe": "./chat.js"
+        "ts-chat": "./chat.js"
     },
     "dependencies": {
         "chalk": "^3.0.0",
