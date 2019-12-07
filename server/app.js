@@ -93,6 +93,7 @@ io.on('connection', socket => {
   /**
    * Listens for a 'disconnect' event when a user leaves the chat
    * @param {string} disconnect disconnect event
+   * @param {object} socket function will use socket.username
    * @fires exit
    */
   socket.on('disconnect', () => {
