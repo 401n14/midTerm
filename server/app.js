@@ -111,12 +111,16 @@ io.on('connection', socket => {
       socket.emit('chathistory', 'CHAT HISTORY');
       let chatHistory = await chat.find();
       
-      chatHistory.forEach(chat => {
-        googleTranslate.translate(chat.message, language, function(err, translation) {
-          socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
+      const processChats = async () => {
+        await asyncForEach(chatHistory, async (chat) => {
+          await waitFor(85);
+          googleTranslate.translate(chat.message, language, async function(err, translation) {
+            await socket.emit('chats', {timestamp: chat.timestamp, user: chat.username, message: translation.translatedText});
+          });
         });
-      });
+      };
 
+      processChats();
     });
 
     /**
@@ -145,7 +149,7 @@ io.on('connection', socket => {
 
     // console.log(user.toUpperCase());
     // Add chate to database
-    chat.create({ message: data.message, username: user.toUpperCase() });
+    chat.create({ message: data.message, username: user.toUpperCase()});
 
     for (let socket in socketPool) {
       if (socket !== data.user) {
@@ -168,8 +172,6 @@ io.on('connection', socket => {
            * @param {string} data.color color from the data object
            * @param {string} translation.translatedText translated version of the text
            */
-
-
           io.to(`${socket}`).emit('message', {
             user: user,
             color: data.color,
@@ -180,7 +182,6 @@ io.on('connection', socket => {
       }
     }
   });
-
 
   /**
    * Listens for a 'disconnect' event when a user leaves the chat
@@ -204,3 +205,10 @@ io.on('connection', socket => {
     console.log(`${socket.username} left the chat`);
   });
 });
+
+const asyncForEach = async (arr, callback) => {
+  for (let index = 0; index < arr.length; index++){
+    await callback(arr[index], index, arr);
+  }
+};
+const waitFor = (ms) => new Promise(r => setTimeout(r, ms));
