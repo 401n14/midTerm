@@ -29,7 +29,7 @@ We have expanded this project to persist messages into a mongo database. We disp
 * Make sure you have [NodeJS](https://nodejs.org/en/) installed
 * Run npm command:
 ```
-npm i transcribe-chat
+npm install -g transcribe-chat
 ```
 * Type command below in your terminal bash prompt to start [Transcribe-chat](https://www.npmjs.com/package/transcribe-chat) application
 
