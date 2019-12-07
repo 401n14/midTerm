@@ -59,7 +59,7 @@ Start chatting
 ![Language](./images/hello.png)
 
 ### The last 5 messages from the chat will be displayed
-![database](./images/databasemessages.png)
+![database](./images/chathistory.png)
 
 ### Start Chatting!
 ![3users](./images/Chatstarted.png)
