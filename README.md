@@ -1,52 +1,42 @@
-# Project Transcribe
----------------------------------
-## Links
+# Project "Transcribe"
+## Production Links
 
-* [Project link](https://n14-transcribe.herokuapp.com)
-
-* [Travis CI](https://www.travis-ci.com/401n14/midTerm)
-
+* [Server](https://n14-transcribe.herokuapp.com) 
+* [Client](https://www.npmjs.com/package/transcribe-chat)
 * [Documentation](https://n14-transcribe.herokuapp.com/docs/)
 
 ---------------------------------
-## Web Application
+## Node Application
 
 The application is a communication platform for realtime chat between two or more users. We utilized NodeJS, JavaScript, Google Translate API, and MongoDB. 
 
-Users will be able to create a username, specify a language, and then enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
+Users are able to create a username, specify a language, and then enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
 
 We have expanded this project to persist messages into a mongo database. We display the last 5 messages in the chat server to a user upon initial login. 
 
 ---------------------------------
 
-## Tools Used
+## Main Dependencies
 
-- NodeJS
-- Express 
-- Socket.io
-- Google Translate API
-- Mongo Database
-- Chalk
-- Readline 
+- [NodeJS](https://nodejs.org/en/)
+- [Express](https://expressjs.com/) 
+- [Socket.io](https://socket.io/)
+- [Google Translate API](https://www.npmjs.com/package/google-translate)
+- [MongoDB](https://www.mongodb.com/) 
 
 ---------------------------------
+## To install application
+* Make sure you have [NodeJS](https://nodejs.org/en/) installed
+* Run npm command:
+```
+npm i transcribe-chat
+```
+* Type command below in your terminal bash prompt to start [Transcribe-chat](https://www.npmjs.com/package/transcribe-chat) application
 
-## Getting Started
-
-Clone this repository to your local machine.
 ```
-$ git clone https://github.com/401n14/midTerm.git
-```
-Once downloaded, use your terminal to enter commands. 
-```
-cd midTerm
-`npm i`
-```
-Install all dependencies needed for the project.
-```
-`node chat/chat.js`
-```
-Start chatting
+ts-chat
+``` 
+* Chat up!
 
 ---------------------------------
 
@@ -86,11 +76,13 @@ Start chatting
 
 
 ## Authors
-Nadya Ilinskaya
-James Dunn
-Anna Li
-Morgan T Shaw
-Martin Balke
-Meron Sibani
+* Nadya Ilinskaya
+* James Dunn
+* Anna Li
+* Morgan T Shaw
+* Martin Balke
+* Meron Sibani
 
-------------------------------
+aka **nightJAMMM team**
+
+ <center>© CodeFellows | 2019</center>
