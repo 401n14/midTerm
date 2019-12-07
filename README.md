@@ -1,93 +1,71 @@
-# MidTerm Project
+# Project "Transcribe"
+## Production Links
 
-# Project Transcribe
----------------------------------
-## We are deployed on _____
+* [Server](https://transcribe-jamm.herokuapp.com) 
+* [Client](https://www.npmjs.com/package/transcribe-chat)
+* [Documentation](https://transcribe-jamm.herokuapp.com/docs/)
 
-[Project link](https://n14-transcribe.herokuapp.com)
-[Travis CI](https://www.travis-ci.com/401n14/midTerm)
----------------------------------
-## Web Application
-***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
+## Node Application
 
-The application is a communication platform for realtime chat between two users. We will be utilizing NodeJS, JavaScript, Google Translate API, and AWS. 
+The application is a communication platform for realtime chat between two or more users. We utilized NodeJS, JavaScript, Google Translate API, and MongoDB. 
 
-Users will be able to create a username and sign in. They can chat through command line to other users in the same chat server. Ultimately, we will be utilizing Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, two users can communicate easily and effectively in two different languages at the same time. 
+Users are able to create a username, specify a language, and then enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
 
-Expansion of this project will include persisting messages in a database so that users will be able to receive messages when they are not active on the server and review previously received messages. 
+We have expanded this project to persist messages into a mongo database. We display the last 5 messages in the chat server to a user upon initial login. 
 
----------------------------------
+## Main Dependencies
 
-## Tools Used
+- [NodeJS](https://nodejs.org/en/)
+- [Express](https://expressjs.com/) 
+- [Socket.io](https://socket.io/)
+- [Google Translate API](https://www.npmjs.com/package/google-translate)
+- [MongoDB](https://www.mongodb.com/) 
 
-- NodeJS
-- Express 
-- Socket.io
-- Google Translate API
-
-
-
----------------------------------
-
-## Getting Started
-
-Clone this repository to your local machine.
+## To install application
+* Make sure you have [NodeJS](https://nodejs.org/en/) installed
+* Run npm command:
 ```
-$ git clone https://github.com/401n14/midTerm.git
+npm install -g transcribe-chat
 ```
-Once downloaded, you can either use the dotnet CLI utilities or Visual Studio 2017 (or greater) to build the web application.
-```
-cd YourRepo/YourProject
-`npm i`
-```
-Install all dependencies needed for the project.
-```
-Database
-```
-* explain how to use the database *
-```
-cd YourRepo/YourProject
-npm start
-```
+* Type command below in your terminal bash prompt to start [Transcribe-chat](https://www.npmjs.com/package/transcribe-chat) application
 
----------------------------------
+```
+ts-chat
+``` 
+* Chat up!
 
 ## Usage
-***[Provide some images of your app that shows how it can be used with brief description as title]***
 
-### Overview of Recent Posts
-![Overview of Recent Posts](https://via.placeholder.com/500x250)
+### Enter a username
+![username](./images/enterUsername.png)
 
-### Creating a Post
-![Post Creation](https://via.placeholder.com/500x250)
+### Type in your preferred language
+![Language](./images/hello.png)
 
-### Enriching a Post
-![Enriching Post](https://via.placeholder.com/500x250)
+### The last 5 messages from the chat will be displayed
+![database](./images/chathistory.png)
 
-### Viewing Post Details
-![Details of Post](https://via.placeholder.com/500x250)
+### Start Chatting!
+![3users](./images/Chatstarted.png)
 
----------------------------
-## Data Flow (Frontend, Backend, REST API)
-***[Add a clean and clear explanation of what the data flow is. Walk me through it.]***
-![Data Flow Diagram](/assets/img/Flowchart.png)
+### Messages will display name of sender and their language
+![newuserNotification](./images/examplemessage.png)
 
----------------------------
-## Data Model
+### Messages will be translated and displayed based on the user's language
+![TranslationDemo](./images/Translation.png)
 
-### Overall Project Schema
-***[Add a description of your DB schema. Explain the relationships to me.]***
-![Database Schema](/assets/img/ERD.png)
-
----------------------------
+## UML Diagram (Frontend, Backend, REST API)
+![Data Flow Diagram](./images/UMLDiagram.png)
 
 
 ## Authors
-Nadya Ilinskaya
-James Dunn
-Anna Li
-Morgan T Shaw
-Martin Balke
-Meron Sibani
+* Nadya Ilinskaya
+* James Dunn
+* Anna Li
+* Morgan T Shaw
+* Martin Balke
+* Meron Sibani
 
-------------------------------
+aka **nightJAMMM team**
+
+ <center>© CodeFellows | 2019</center>
