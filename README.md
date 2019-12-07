@@ -1,20 +1,21 @@
-# MidTerm Project
-
 # Project Transcribe
 ---------------------------------
-## We are deployed on Heroku
+## Links
 
-[Project link](https://n14-transcribe.herokuapp.com)
-[Travis CI](https://www.travis-ci.com/401n14/midTerm)
+* [Project link](https://n14-transcribe.herokuapp.com)
+
+* [Travis CI](https://www.travis-ci.com/401n14/midTerm)
+
+* [Documentation](https://n14-transcribe.herokuapp.com/docs/)
+
 ---------------------------------
 ## Web Application
-***[Explain your app, should be at least a paragraph. What does it do? Why should I use? Sell your product!]***
 
-The application is a communication platform for realtime chat between two or more users. We will be utilizing NodeJS, JavaScript, Google Translate API. 
+The application is a communication platform for realtime chat between two or more users. We utilized NodeJS, JavaScript, Google Translate API, and MongoDB. 
 
-Users will be able to create a username and enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
+Users will be able to create a username, specify a language, and then enter a group chat. They can chat through command line to other users in the same chat server. We have utilized Google Translate API to translate one user's preferred language to the other user's preferred language. Essentially, users can communicate easily and effectively in multiple languages at the same time. 
 
-Expansion of this project will include persisting messages in a database so that users will be able to receive messages when they are not active on the server and review previously received messages. 
+We have expanded this project to persist messages into a mongo database. We display the last 5 messages in the chat server to a user upon initial login. 
 
 ---------------------------------
 
@@ -24,6 +25,9 @@ Expansion of this project will include persisting messages in a database so that
 - Express 
 - Socket.io
 - Google Translate API
+- Mongo Database
+- Chalk
+- Readline 
 
 ---------------------------------
 
@@ -49,13 +53,22 @@ Start chatting
 ## Usage
 
 ### Enter a username
-![username](./images/NameLogin.png)
+![username](./images/enterUsername.png)
 
 ### Type in your preferred language
-![Language](./images/LanguageChoice.png)
+![Language](./images/hello.png)
 
-### Start Chatting
-![3users](./images/ExampleofThreeUsers.png)
+### The last 5 messages from the chat will be displayed
+![database](./images/chathistory.png)
+
+### Start Chatting!
+![3users](./images/Chatstarted.png)
+
+### Messages will display name of sender and their language
+![newuserNotification](./images/examplemessage.png)
+
+### Messages will be translated and displayed based on the user's language
+![TranslationDemo](./images/Translation.png)
 
 ---------------------------
 ## Data Flow (Frontend, Backend, REST API)
